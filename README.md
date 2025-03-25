@@ -1,5 +1,4 @@
 # Proyecto - Desarrollo de Aplicaciones Web  
-Aplicación web que permite gestionar actividades recreativas
 
 ## Índice
 - [Descripción](#descripción)
