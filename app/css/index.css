@@ -33,7 +33,7 @@ body {
     gap: 15px; 
 }
 
-#submit-btn {
+.submit-btn {
     background-color: var(--purple-color);
     text-align: center;
     padding: 1.2em;
@@ -41,9 +41,10 @@ body {
     border-radius: 1.5em;
     font-weight: 600;
     font-size: 1.2rem; 
+    font-family: "Source Code Pro", monospace;
 }
 
-#submit-btn:hover {
+.submit-btn:hover {
     background-color: var(--purple-hover-color);
     transition: 0.2s ease;
 }
