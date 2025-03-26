@@ -1,0 +1,96 @@
+:root {
+    --black-color: #000022;
+    --background-color: #e8e6f071;
+    --purple-color: #de8efb;
+    --purple-hover-color: #a064b5;
+}
+
+body {
+    margin: 0;
+    background-color: var(--background-color);
+    width: 90%; /* Ajusta según sea necesario */
+    margin: 20px auto; /* Centra horizontalmente */
+}
+
+/* CONTAINER */
+.main-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    margin: 0;
+}
+
+
+.main-container > * {
+    font-family: "Source Code Pro", monospace;
+}
+
+/* BUTTON */
+.button-container {
+    display: flex;
+    justify-content: center; 
+    gap: 15px; 
+}
+
+#submit-btn {
+    background-color: var(--purple-color);
+    text-align: center;
+    padding: 1.2em;
+    border: .2em solid var(--black-color);
+    border-radius: 1.5em;
+    font-weight: 600;
+    font-size: 1.2rem; 
+}
+
+#submit-btn:hover {
+    background-color: var(--purple-hover-color);
+    transition: 0.2s ease;
+}
+
+/* TABLE */
+
+.table-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: left; 
+    text-align: left;
+    margin: 0;
+    font-size: 1.2rem; 
+}
+
+.table-container > * {
+    font-family: "Source Code Pro", monospace;
+}
+
+table {
+    border: 2px solid black;
+    border-radius: 10px;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+th, td {
+    border: 2px solid black; 
+    padding: 10px; 
+}
+
+th{
+    background-color: #87868871;
+}
+
+.small-text {
+    font-size: 1.5rem; 
+}
+
+h1 {
+    margin-bottom: 5px;
+    margin-top: 5px; 
+    font-size: 3rem;
+
+}
+h2 {
+    margin-bottom: 5px;
+    margin-top: 5px; 
+    font-size: 2.5rem;
+}
