@@ -19,6 +19,7 @@ body {
     flex-direction: column;
     justify-content: center;
     text-align: center;
+    align-items: center; 
     margin: 0;
 }
 
@@ -77,13 +78,28 @@ th{
     background-color: #87868871;
 }
 
+/* STATS */
+
+.stats-column {
+    column-count:3;
+    column-gap:10px;
+    column-rule:none;
+    list-style: none;
+}
+
+.stats-container{
+    background-color: #87868871;
+    border-radius: 10px;
+    width: 450px;  
+    height: 300px; 
+}
+
 .small-text {
     font-size: 1.5rem; 
 }
 
 h1 {
-    margin-bottom: 5px;
-    margin-top: 5px; 
+    
     font-size: 3rem;
 
 }
