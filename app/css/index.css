@@ -8,8 +8,9 @@
 body {
     margin: 0;
     background-color: var(--background-color);
-    width: 90%; /* Ajusta según sea necesario */
-    margin: 20px auto; /* Centra horizontalmente */
+    width: 90%; 
+    margin: 20px auto; 
+    font-family: "Source Code Pro", monospace;
 }
 
 /* CONTAINER */
@@ -21,10 +22,6 @@ body {
     margin: 0;
 }
 
-
-.main-container > * {
-    font-family: "Source Code Pro", monospace;
-}
 
 /* BUTTON */
 .button-container {
