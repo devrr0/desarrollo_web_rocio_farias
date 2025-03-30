@@ -93,13 +93,13 @@ tr.clickable:hover {
     column-count:3;
     column-gap:10px;
     column-rule:none;
-    list-style: none;
+    list-style: none; 
 }
 
 .stats-container{
     background-color: var(--gray-color);
     border-radius: 10px;
-    width: 450px;  
+    width: 400px;  
     height: 300px; 
 }
 
