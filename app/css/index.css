@@ -67,6 +67,7 @@ table {
     border-radius: 10px;
     border-collapse: separate;
     border-spacing: 0;
+    font-size: 1.2rem
 }
 
 th, td {
