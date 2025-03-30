@@ -3,6 +3,8 @@
     --background-color: #e8e6f071;
     --purple-color: #de8efb;
     --purple-hover-color: #a064b5;
+    --gray-color:  #87868871;
+    --gray-hover-color: #e1bfee;
 }
 
 body {
@@ -76,7 +78,13 @@ th, td {
 }
 
 th{
-    background-color: #87868871;
+    background-color: var(--gray-color);
+}
+
+
+tr.clickable:hover {
+    background-color: var(--gray-hover-color);
+    transition: 0.2s ease;
 }
 
 /* STATS */
@@ -89,7 +97,7 @@ th{
 }
 
 .stats-container{
-    background-color: #87868871;
+    background-color: var(--gray-color);
     border-radius: 10px;
     width: 450px;  
     height: 300px; 
