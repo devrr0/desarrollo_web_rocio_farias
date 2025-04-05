@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="utf-8">
+        <title>Listado de Actividades - Actividades recreativas </title>
+        <link rel="stylesheet" href="../css/index.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <button type="button" class="submit-btn" id="btn-back">Volver al inicio</button>
+        <div class="main-container">
+            <h1> Agregar un actividad</h1>
+            <div class="form-container">
+                <form name="myForm" method="post" enctype="multipart/form-data">
+                    <p class="small-text"><strong>¿Dónde se realiza la actividad?</strong></p>
+                
+                    <!-- Region y Comuna-->
+                    <div class="form-column">
+                        <div class="form-row">
+                            <label for="select-region">Región</label>
+                            <select name="select-region" id="select-region" required>
+                                <option value="">Seleccione una región</option>
+                            </select>
+                        </div>
+                    
+                        <div class="form-row">
+                            <label for="select-comuna">Comuna</label>
+                            <select name="select-comuna" id="select-comuna" required>
+                                <option value="">Seleccione una comuna</option>
+                            </select>
+                        </div>
+                    </div>
+                
+                    <!-- Sector-->
+                    <div class="form-row">
+                        <label for="sector">Sector</label>
+                        <input type="text" name="sector" id="sector" minlength="15" maxlength="100">
+                    </div>
+                
+                    <p class="small-text"><strong>¿Quién organiza la actividad?</strong></p>
+
+                    <!-- Nombre-->
+                    <div class="form-row">
+                        <label for="nombre">Nombre</label>
+                        <input type="text" name="nombre" id="nombre" minlength="15" maxlength="200" required>
+                    </div>
+
+                    <!-- Email y Telefono-->
+                    <div class="form-column">
+                        <div class="form-row">
+                            <label for="email">Email</label>
+                            <input type="email" name="email" id="email" minlength="15" maxlength="100" required>
+                        </div>
+                    
+                        <div class="form-row">
+                            <label for="tel">Tel</label>
+                            <input type="tel" name="tel" id="tel" minlength="8">
+                        </div>
+                    </div>
+
+                    <!-- Contactar por-->
+                    <div class="form-row">
+                        <label for="select-contact">Conta- <br>cto</label>
+                        <select name="select-contact" id="select-contact">
+                            <option value="">Selecciona una forma de contacto</option>
+                        </select>
+                    </div>
+
+                    <div class="form-option">
+                        <input type="text" name="info-contact" id="info-contact" placeholder="Id/URL de contacto" minlength="4" maxlength="50">
+                    </div>
+
+                    <p class="small-text"><strong>¿Cuándo y de que trata?</strong></p>
+
+                    <!-- Inicio y Termino-->
+                    <div class="form-column">
+                        <div class="form-row">
+                            <label for="inicio">Inicio</label>
+                            <input type="datetime-local" name="inicio" id="inicio" min="2025-04-08T00:00" required>
+                        </div>
+                    
+                        <div class="form-row">
+                            <label for="termino">Término</label>
+                            <input type="datetime-local" name="termino" id="termino" min="2025-04-08T00:00">
+                        </div>
+                    </div>
+
+                    <!-- Descripcion-->
+                    <div class="form-row">
+                        <label for="descripcion">Descrip- <br>ción</label>
+                        <textarea name="descripcion" id="descripcion" cols="50" rows="10"></textarea>
+                    </div>
+
+                    <!-- Tema-->
+                    <div class="form-row">
+                        <label for="select-tema">Tema</label>
+                        <select name="select-tema" id="select-tema" required>
+                            <option value="">Selecciona un tema</option>
+                        </select>
+                    </div>
+                    <div class="form-option">
+                        <input type="text" name="info-contact" id="info-contact" placeholder="Descripción del tema" minlength="3" maxlength="15">
+                    </div>
+
+                    <!-- Fotos-->
+                    <div class="form-row">
+                        <label for="files">Fotos</label>
+                        <input type="file" name="files" id="files" multiple accept="image/*,.pdf" multiple required><br>
+                        <button class="submit-btn-form" type="button" id="add-photo-btn">Agregar foto </button>
+                    </div>
+                    
+                </form>
+            </div>
+            <button type="button" class="submit-btn" id="btn-add-act">Agregar esta actividad</button>
+        </div>
+        
+
+        <script src="../js/agregar-actividad.js"></script>
+    </body>
+</html>    
