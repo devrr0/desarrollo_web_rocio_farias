@@ -2,7 +2,7 @@
 <html lang="fr">
     <head>
         <meta charset="utf-8">
-        <title>Listado de Actividades - Actividades recreativas </title>
+        <title>Agregar Actividad - Actividades recreativas </title>
         <link rel="stylesheet" href="../css/index.css">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,6 +13,15 @@
         <div class="main-container">
             <h1> Agregar un actividad</h1>
             <div class="form-container">
+                <div id="val-box" style="text-align: center;">
+                    <p class="small-text" id="val-msg"></p>
+                    <ul id="val-list"></ul>
+                </div>
+
+                <div id="submit-box" style="align-content: center;">
+                    <p class="small-text" id="submit-msg"></p>
+                </div>
+
                 <form name="myForm" method="post" enctype="multipart/form-data">
                     <p class="small-text"><strong>¿Dónde se realiza la actividad?</strong></p>
                 
@@ -36,7 +45,7 @@
                     <!-- Sector-->
                     <div class="form-row">
                         <label for="sector">Sector</label>
-                        <input type="text" name="sector" id="sector" minlength="15" maxlength="100">
+                        <input type="text" name="sector" id="sector" maxlength="100">
                     </div>
                 
                     <p class="small-text"><strong>¿Quién organiza la actividad?</strong></p>
@@ -44,19 +53,19 @@
                     <!-- Nombre-->
                     <div class="form-row">
                         <label for="nombre">Nombre</label>
-                        <input type="text" name="nombre" id="nombre" minlength="15" maxlength="200" required>
+                        <input type="text" name="nombre" id="nombre" minlength="4" maxlength="200" required>
                     </div>
 
                     <!-- Email y Telefono-->
                     <div class="form-column">
                         <div class="form-row">
                             <label for="email">Email</label>
-                            <input type="email" name="email" id="email" minlength="15" maxlength="100" required>
+                            <input type="email" name="email" id="email" minlength="10" maxlength="100" required>
                         </div>
                     
                         <div class="form-row">
                             <label for="tel">Tel</label>
-                            <input type="tel" name="tel" id="tel" minlength="8">
+                            <input type="tel" name="tel" id="tel" placeholder="+569XXXXXXXX" minlength="12" maxlength="12">
                         </div>
                     </div>
 
@@ -68,9 +77,14 @@
                         </select>
                     </div>
 
-                    <div class="form-option">
-                        <input type="text" name="info-contact" id="info-contact" placeholder="Id/URL de contacto" minlength="4" maxlength="50">
+                    <div class="form-row">
+                        <label for="info-contact" id="label-info-contact" style="display: none;">Info</label>
+                        <input type="text" name="info-contact" id="info-contact" placeholder="Id/URL de contacto" minlength="4" maxlength="50" style="display: none;"> <!-- style="display: none;"-->
+                        <button class="submit-btn-form" type="button" id="add-info-btn" style="display: none;">Agregar</button>
                     </div>
+
+                    <div id="id-info" style="margin-left: 90px; width: 70%;"></div>
+                    <p id="contact-error" style="margin-left: 90px; font-weight: bold;"></p>
 
                     <p class="small-text"><strong>¿Cuándo y de que trata?</strong></p>
 
@@ -78,12 +92,12 @@
                     <div class="form-column">
                         <div class="form-row">
                             <label for="inicio">Inicio</label>
-                            <input type="datetime-local" name="inicio" id="inicio" min="2025-04-08T00:00" required>
+                            <input type="datetime-local" name="inicio" id="inicio" min="2025-04-07T00:00" required>
                         </div>
                     
                         <div class="form-row">
                             <label for="termino">Término</label>
-                            <input type="datetime-local" name="termino" id="termino" min="2025-04-08T00:00">
+                            <input type="datetime-local" name="termino" id="termino" min="2025-04-07T00:00">
                         </div>
                     </div>
 
@@ -101,22 +115,25 @@
                         </select>
                     </div>
                     <div class="form-option">
-                        <input type="text" name="info-contact" id="info-contact" placeholder="Descripción del tema" minlength="3" maxlength="15">
+                        <input type="text" name="info-tema" id="info-tema" placeholder="Descripción del tema" minlength="2" maxlength="15" style="display: none;">
                     </div>
 
                     <!-- Fotos-->
                     <div class="form-row">
                         <label for="files">Fotos</label>
-                        <input type="file" name="files" id="files" multiple accept="image/*,.pdf" multiple required><br>
+                        <input type="file" name="files" id="files" multiple accept="image/*,.pdf" required>
                         <button class="submit-btn-form" type="button" id="add-photo-btn">Agregar foto </button>
                     </div>
+                    <p id="files-list" style="margin-left: 90px; font-weight: bold;"></p>
+                    <p id="files-error" style="margin-left: 90px; font-weight: bold;"></p>
                     
                 </form>
             </div>
             <button type="button" class="submit-btn" id="btn-add-act">Agregar esta actividad</button>
+            <p class="small-text" id="problem-msg"></p>
         </div>
         
-
+        <script src="../js/select.js"></script>
         <script src="../js/agregar-actividad.js"></script>
     </body>
 </html>    

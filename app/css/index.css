@@ -178,6 +178,14 @@ tr.clickable:hover {
     height: 40px;
 }
 
+.info-line {
+    display: flex;
+    align-items: left;  
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+
 .small-text {
     font-size: 1.5rem; 
 }
