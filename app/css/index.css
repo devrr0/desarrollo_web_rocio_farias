@@ -89,18 +89,12 @@ tr.clickable:hover {
 
 /* STATS */
 
-.stats-column {
-    column-count:3;
-    column-gap:10px;
-    column-rule:none;
-    list-style: none; 
-}
-
 .stats-container{
     background-color: var(--gray-color);
+    align-content: center;
     border-radius: 10px;
-    width: 400px;  
-    height: 300px; 
+    width: 600px;  
+    height: 400px; 
 }
 
 /* FORMS */
@@ -203,5 +197,9 @@ h2 {
 
 label{
     font-size: 1.5rem;
+}
+img {
+    max-width: 95%;
+    max-height: 95%;
 }
 
