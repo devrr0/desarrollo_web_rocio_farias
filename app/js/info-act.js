@@ -21,7 +21,7 @@ const redirectInfo = () => {
     let image = document.getElementById("image-elem");
 
     imageBox.style.display="none";
-    image.src = "";
+    image.src = "../img/placeholder.jpg";
 }
 
 let btnBack = document.getElementById("btn-back");
