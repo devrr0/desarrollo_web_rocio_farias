@@ -2,8 +2,8 @@
 
 ## Índice
 - [Descripción](#descripción)
-- [Estructura del Proyecto](#estructura-del-proyecto)
 - [Consideraciones del proyecto](#consideraciones-del-proyecto)
+- [Estructura del Proyecto](#estructura-del-proyecto)
 
 
 ## Descripción
