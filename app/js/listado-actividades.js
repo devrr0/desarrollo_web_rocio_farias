@@ -3,7 +3,7 @@ const redirectIndex = () => {
 }
 
 const redirectInfo = () => {
-    window.location.href = "../html/info-app.html";
+    window.location.href = "../html/info-act.html";
 }
 
 let btnBack = document.getElementById("btn-back");
