@@ -24,7 +24,7 @@ app/                                    # Aplicación web principal
 │  ├── index.html                       # Portada
 │  ├── info-act.html                    # Página de información de una actividad
 │  ├── listado-actividades.html         # Página de listado de actividades agregadas
-│  └── stats.html                      # Página de estadísticas
+│  └── stats.html                       # Página de estadísticas
 ├──img/                                 # Imágenes del proyecto
 │  ├── actividades_por_dia.png          # Gráfico de cantidad de actividades por día
 │  ├── actividades_por_mes.png          # Gráfico de cantidad de actividades por hora/mes
