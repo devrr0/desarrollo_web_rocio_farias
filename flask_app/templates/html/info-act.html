@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <title>Info de Actividad - Actividades recreativas </title>
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <button type="button" class="submit-btn" id="btn-back">Volver al inicio</button>
+    <button type="button" class="submit-btn" id="btn-list">Volver al listado</button>
+    <div class="main-container">
+        <h1> Información de la Actividad</h1>
+        <div id="image-box" class="image-box" style="display: none;">
+            <img id="image-elem" src="../img/placeholder.jpg" alt="Imagen ampliada" width="800" height="600">
+            <button id="close-box" class="submit-btn-form">Cerrar</button>
+        </div> 
+    </div>
+
+    <div class="table-container" id="info-box">
+        <!-- Tabla 1-->
+        <h2>¿Dónde se realiza la actividad?</h2>
+        <table>
+            <colgroup>
+                <col style="width: 15%; background-color: #87868871;">
+                <col>
+            </colgroup>
+            <tr> 
+                <td><strong>Región</strong></td>
+                <td>Metropolitana</td>
+            </tr>
+            <tr> 
+                <td><strong>Comuna</strong></td>
+                <td>Santiago</td>
+            </tr>
+            <tr> 
+                <td><strong>Sector</strong></td>
+                <td>Beauchef 850, Araña</td>
+            </tr>
+        </table>
+
+        <!-- Tabla 2-->
+        <h2>¿Quién organiza la actividad?</h2>
+        <table>
+            <colgroup>
+                <col style="width: 15%; background-color: #87868871;">
+                <col>
+            </colgroup>
+            <tr> 
+                <td><strong>Nombre</strong></td>
+                <td>Departamento de Ciencias de la Computación (DCC)</td>
+            </tr>
+            <tr> 
+                <td><strong>Contacto</strong></td>
+                <td>Instagram(dccuchile)</td>
+            </tr>
+        </table>
+
+        <!-- Tabla 3-->
+        <h2>¿Cuándo y de qué trata?</h2>
+        <table>
+            <colgroup>
+                <col style="width: 15%; background-color: #87868871;">
+                <col>
+            </colgroup>
+            <tr> 
+                <td><strong>Inicio</strong></td>
+                <td>2025-05-23 13:00</td>
+            </tr>
+            <tr> 
+                <td><strong>Término</strong></td>
+                <td>2025-05-23 16:00</td>
+            </tr>
+            <tr> 
+                <td><strong>Tema</strong></td>
+                <td>Baile</td>
+            </tr>
+            <tr> 
+                <td><strong>Descripción</strong></td>
+                <td>¡Prepárate para una tarde llena de ritmo y energía!
+                    El Departamento de Ciencias de la Computación (DCC) te invita a un evento único donde el baile será el protagonista.
+                     Ven a disfrutar de una jornada vibrante donde podrás aprender, moverte y conectar con otros apasionados del baile.
+                     Ya seas principiante o experto, este evento es para ti. ¡No te pierdas la oportunidad de vivir una experiencia 
+                     llena de música, diversión y buena compañía! Trae tu mejor actitud y ganas de bailar ¡Te esperamos! </td>
+            </tr>
+            <tr> 
+                <td style="height: 150px;"><strong>Fotos</strong></td>
+                <td> <div class="image-wrapper">
+                        <img src="../img/baile.png" alt="Baile foto 1" width="320" height="240"> <br>
+                        <button onclick="expandImage(this)">Expandir</button>
+                    </div>
+                    <div class="image-wrapper">
+                        <img src="../img/baile2.png" alt="Baile foto 2" width="320" height="240"> <br>
+                        <button onclick="expandImage(this)">Expandir</button>
+                    </div>
+                    <div class="image-wrapper">
+                        <img src="../img/baile3.png" alt="Baile foto 3" width="320" height="240"> <br>
+                        <button onclick="expandImage(this)">Expandir</button>
+                    </div>
+                </td>    
+            </tr>
+        </table>
+    </div>
+    <script src="../js/info-act.js"></script>
+</body>
+
+</html>
