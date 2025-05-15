@@ -225,8 +225,8 @@ const validateForm = () => {
 
             // agregar manualmente contactos
             for (const contact in list_contacts) {
-                list_contacts[contacts].forEach(i => {
-	            formData.append(`contactos[${tipo}][]`, i)})
+                list_contacts[contact].forEach(i => {
+	                formData.append(`contactos[${i}][]`, i)})
             }
             // agregar manualmente fotos
             for (const file of list_fotos) {
@@ -400,11 +400,12 @@ inputTema.addEventListener("change", infoTema);
 let addPhotoBtn = document.getElementById("add-photo-btn");
 addPhotoBtn.addEventListener("click", addPhoto);
 
-// resetear variables globales al cargar la página
+// resetear al cargar la página
 window.addEventListener("DOMContentLoaded", () => {
+    let myForm = document.forms["myForm"];
     list_contacts = {};
     cnt_contacts = 0;
     list_fotos = [];
     cnt_fotos = 0;
-    // myForm.reset();  // necesario ??
+    myForm.reset();  
 });
