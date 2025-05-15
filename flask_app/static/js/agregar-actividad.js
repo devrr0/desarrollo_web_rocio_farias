@@ -216,10 +216,31 @@ const validateForm = () => {
         submitButton.className = "submit-btn";
         submitButton.style.marginRight = "10px";
         submitButton.addEventListener("click", () => {
-            // myForm.submit();
-            // no tenemos un backend al cual enviarle los datos
+            // crear formulario
+            if (contact) contact.remove();
+            if (info_contact) info_contact.remove();
+            if (input_files) input_files.remove();
+
+            const formData = new FormData(myForm);	// necesario ??
+
+            // agregar manualmente contactos
+            for (const contact in list_contacts) {
+                list_contacts[contacts].forEach(i => {
+	            formData.append(`contactos[${tipo}][]`, i)})
+            }
+            // agregar manualmente fotos
+            for (const file of list_fotos) {
+                formData.append("fotos[]", file);
+            }
+            // enviar formulario
+            formData.submit();
             validationBox.style.display="none";
             submitMessageElem.innerText="Hemos recibido su información, muchas gracias y suerte en su actividad";
+            // limpiar variables globales
+            list_contacts = {};
+            cnt_contacts = 0;
+            list_fotos = [];
+            cnt_fotos = 0;
         });
 
         let backButton = document.createElement("button");
@@ -243,7 +264,7 @@ const validateForm = () => {
 
 // Agregar informacion de contacto
 let cnt_contacts = 0; 
-let list_contacts = []; // mejor un diccionario ?
+let list_contacts = {}; 
 const addContact = () => {
     let contact = document.getElementById("select-contact");
     let info = document.getElementById("info-contact");
@@ -265,9 +286,13 @@ const addContact = () => {
             return; 
         }
     
+        // agregar a la lista la info de contacto
+        if(!list_contacts.hasOwnProperty(contact.value)) {
+            list_contacts[contact.value] = [];
+        }
+        list_contacts[contact.value].push(info.value);
         errorMsg.innerText = "";
         cnt_contacts += 1;
-        // agregar a la lista la info de contacto
         
         const entry = document.createElement("div");
         entry.className = "info-line";
@@ -280,11 +305,19 @@ const addContact = () => {
         removeBtn.style.marginLeft = "10px";
         removeBtn.addEventListener("click", () => {
             infoText.removeChild(entry);
+            // eliminar de la lista la info de contacto
+            if (list_contacts[contact.value]) {
+                list_contacts[contact.value] = list_contacts[contact.value].filter(i => i !== info.value)
+                if(list_contacts[contact.value].length===0){
+                    delete list_contacts[contact.value];
+                }
+            }
+
             cnt_contacts -= 1;
             if(cnt_contacts < 5){
             errorMsg.innerText = "";
             }
-            // eliminar de la lista la info de contacto
+            
         });
         
         entry.appendChild(span);
@@ -366,3 +399,12 @@ inputTema.addEventListener("change", infoTema);
 // Agregar mas fotos
 let addPhotoBtn = document.getElementById("add-photo-btn");
 addPhotoBtn.addEventListener("click", addPhoto);
+
+// resetear variables globales al cargar la página
+window.addEventListener("DOMContentLoaded", () => {
+    list_contacts = {};
+    cnt_contacts = 0;
+    list_fotos = [];
+    cnt_fotos = 0;
+    // myForm.reset();  // necesario ??
+});
