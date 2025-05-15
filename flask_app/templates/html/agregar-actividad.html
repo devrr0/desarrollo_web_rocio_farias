@@ -1,12 +1,14 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="es">
     <head>
         <meta charset="utf-8">
-        <title>Agregar Actividad - Actividades recreativas </title>
-        <link rel="stylesheet" href="../css/index.css">
+        <title>{% block title % } Agregar Actividad - Actividades recreativas {% endblock %}</title>
+        {% block css %}
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+        {% endblock %}
     </head>
     <body>
         <button type="button" class="submit-btn" id="btn-back">Volver al inicio</button>
@@ -133,7 +135,9 @@
             <p class="small-text" id="problem-msg"></p>
         </div>
         
-        <script src="../js/select.js"></script>
-        <script src="../js/agregar-actividad.js"></script>
+        {% block javascript %}
+            <script lang="javascript" src="{{ url_for('static', filename='js/select.js') }}"></script>
+            <script lang="javascript" src="{{ url_for('static', filename='js/agregar-actividad.js') }}"></script>
+         {% endblock %}
     </body>
 </html>    

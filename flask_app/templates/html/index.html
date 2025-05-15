@@ -1,12 +1,14 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="es">
     <head>
         <meta charset="utf-8">
-        <title>Portada - Actividades recreativas </title>
-        <link rel="stylesheet" href="../css/index.css">
+        <title>{% block title % } Portada - Actividades recreativas {% endblock %}</title>
+        {% block css %}
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+        {% endblock %}
     </head>
 
     <body>
@@ -25,6 +27,7 @@
 
          </div>
 
+         {% block content %}
          <!-- Tabla -->
          <div class="table-container">
             <p class="small-text">Actividades recientemente agregadas</p>
@@ -39,55 +42,24 @@
                     <th>Foto</th>
                 </tr>
                 <!-- Contenido -->
-                <tr>
-                    <td>2025-05-23 13:00</td>
-                    <td>2025-05-23 16:00</td>
-                    <td>Santiago</td>
-                    <td>Beauchef 850, Araña</td>
-                    <td>Baile</td>
-                    <td> <img src="../img/baile.png" alt="Baile" width="320" height="240"> </td>
-                </tr>
-
-                <tr>
-                    <td>2025-06-18 17:00</td> 
-                    <td>2025-06-18 20:00</td> 
-                    <td>Providencia</td> 
-                    <td>Cine Hoyts Portal La Reina</td> 
-                    <td>Proyección de películas</td> 
-                    <td> <img src="../img/peliculas.png" alt="Proyección de peliculas" width="320" height="240"> </td>
-                </tr>
-
-                <tr>
-                    <td>2025-08-07 19:00</td> 
-                    <td>2025-08-07 21:00</td>
-                    <td>La Florida</td> 
-                    <td>Teatro San Ginés</td> 
-                    <td>Comedia en vivo</td> 
-                    <td> <img src="../img/comedia.png" alt="Comedia en vivo" width="320" height="240"></td>
-                </tr>
-
-                <tr>
-                    <td>2025-09-20 16:00</td> 
-                    <td>2025-09-20 18:00</td> 
-                    <td>Macul</td> 
-                    <td>Estadio Nacional</td> 
-                    <td>Partido de fútbol</td> 
-                    <td> <img src="../img/futbol.png" alt="Partido de futbol" width="320" height="240"> </td>
-                </tr>
-
-                <tr>
-                    <td>2025-07-10 09:00</td> 
-                    <td>2025-07-12 18:00</td> 
-                    <td>Puente Alto</td> 
-                    <td>Centro Recreativo El Trapiche</td>
-                    <td>Festival de música</td> 
-                    <td> <img src="../img/musica.png" alt="Festival de música" width="320" height="240"> </td>
-                </tr>
-
+                 {% if data %}
+                    {% for act in data%}
+                    <tr>
+                        <td>{{ act.inicio }}</td>
+                        <td>{{ act.termino }}</td>
+                        <td>{{ act.comuna }}</td>
+                        <td>{{ act.sector }}</td>
+                        <td>{{ act.tema }}</td>
+                        <td> <img src="{{ act.img }}" alt="Foto actividad" width="320" height="240"> </td>
+                    </tr>
+                    {% endfor%}
+                {% endif %}
             </table>
          </div>
-
-         <script src="../js/index.js"></script>
+         {% endblock %}
+         {% block javascript %}
+            <script lang="javascript" src="{{ url_for('static', filename='js/index.js') }}"></script>
+         {% endblock %}
     </body>
     
 </html>
