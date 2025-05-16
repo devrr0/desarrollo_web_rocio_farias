@@ -2,8 +2,8 @@ const redirectIndex = () => {
     window.location.href = "../html/index.html";
 }
 
-const redirectInfo = () => {
-    window.location.href = "../html/info-act.html";
+const redirectInfo = (id) => {
+    window.location.href = "/activitie/${id}";
 }
 
 let btnBack = document.getElementById("btn-back");

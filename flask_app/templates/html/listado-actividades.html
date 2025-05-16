@@ -33,7 +33,7 @@
                 <!-- Contenido -->
                  {% if data %}
                     {% for act in data%}
-                    <tr class="clickable" onclick="redirectInfo()">
+                    <tr class="clickable" onclick="redirectInfo('{{ act.id }}')">
                         <td>{{ act.inicio }}</td>
                         <td>{{ act.termino }}</td>
                         <td>{{ act.comuna }}</td>
@@ -45,6 +45,15 @@
                     {% endfor%}
                 {% endif %}
             </table>
+            <div>
+                {% if page > 1 %}
+                    <a href="{{ url_for('all_activities', page=page-1) }}" class="submit-btn">Anterior</a>
+                {% endif %}
+                <span>Página {{ page }} de {{ total_pages }}</span>
+                {% if total_pagea > page %}
+                    <a href="{{ url_for('all_activities', page=page+1) }}" class="submit-btn">Siguiente</a>
+                {% endif %}
+            </div>
          </div>
          {% endblock %}
          {% block javascript %}
