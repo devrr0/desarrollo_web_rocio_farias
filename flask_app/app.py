@@ -26,12 +26,12 @@ if not os.path.exists(app.config['UPLOAD_FOLDER']):
 def recent_activities():
     PAGE_SIZE = 5
     data = []
-    for act in db.get_activities(page_size=PAGE_SIZE, offset=0):      # implementar
+    for act in db.get_activities(page_size=PAGE_SIZE, offset=0):      
         act_id = act.id
 
-        comuna = db.get_comuna_by_id(act.comuna_id)         # implementar
-        foto = db.get_fotos(act_id, 1)                         # implementar
-        tema = db.get_tema(act_id)                          # implementar
+        comuna = db.get_comuna_by_id(act.comuna_id)         
+        foto = db.get_fotos(act_id)[0]                         
+        tema = db.get_tema(act_id)                          
         path_img = f"{foto.ruta_archivo}/{foto.nombre_archivo}" 
 
         data.append({
@@ -51,7 +51,7 @@ def all_activities():
     page = request.args.get("page", 1, type=int)
     offset = (page - 1) * PAGE_SIZE
 
-    total_activities = db.get_total_activities()    # implementar
+    total_activities = db.get_total_activities()    
     activities = db.get_activities(page_size=PAGE_SIZE, offset=offset)            
     data = []
     for act in activities:
@@ -80,9 +80,9 @@ def info_activitie(activitie_id):
     act = db.get_activitie_by_id(activitie_id)
 
     comuna = db.get_comuna_by_id(act.comuna_id)
-    region = db.get_region_by_id(comuna.region_id)      # implementar
+    region = db.get_region_by_id(comuna.region_id)      
     tema = db.get_tema(act.id)
-    contactos = db.get_contact(act.id)            # implementar
+    contactos = db.get_contact(act.id)            
     contacto_str = ', '.join([f"{c.nombre} ({c.identificador})" for c in contactos])
 
     data = {
@@ -110,7 +110,7 @@ def post_activitie():
         sector = request.form.get('sector')
         nombre = request.form.get('nombre')
         email = request.form.get('email')
-        telefono = request.form.get('tel')
+        tel = request.form.get('tel')
         inicio = request.form.get('inicio')
         termino = request.form.get('termino')
         descripcion = request.form.get('descripcion')
@@ -119,7 +119,7 @@ def post_activitie():
         contactos = []  # implementar
         fotos = []      # implementar
 
-        if validate_form(region, comuna, sector, nombre, email, telefono, inicio, termino, descripcion, tema, info_tema, contactos, fotos):
+        if validate_form(region, comuna, sector, nombre, email, tel, inicio, termino, descripcion, tema, info_tema, contactos, fotos):
             imgs = []
             for f in fotos:
                 # 1. generate random name for img
@@ -133,9 +133,21 @@ def post_activitie():
                 f.save(os.path.join(app.config["UPLOAD_FOLDER"], img_filename))
                 imgs.append((img_filename,'img'))
 
-            # 3. save confession in db
-            db.create_activitie(region, comuna, sector, nombre, email, telefono, inicio, termino, descripcion, tema, info_tema, contactos, imgs)
-            # implementar
+            # 3. save in db
+            # agregar actividad
+            act_id = db.create_activitie(comuna, sector, nombre, email, tel, inicio, termino, descripcion)
+            # agregar imagenes
+            for i in imgs:
+                db.create_img(i[1], i[0], act_id)
+            # agregar tema
+            db.create_theme(tema, info_tema, act_id)
+            # agregar contacto
+            # for c in contactos:
+                # db.create_contact(...)
+            # primero definir que tengo en la lista contactos
+
+            
+
         return redirect(url_for("recent_activities"))  
     
     elif request.method == "GET":

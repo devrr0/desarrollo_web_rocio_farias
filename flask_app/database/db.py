@@ -104,4 +104,82 @@ class ActividadTema(Base):
 
 # --- Database Functions ---
 
-# primero definir que info necesito...
+# get from database  
+
+def get_activities(page_size, offset):
+    session = SessionLocal()
+    activities = session.query(Actividad).limit(page_size).offset(offset).all()
+    session.close()
+    return activities
+
+def get_total_activities():
+    return len(Actividad.__table__.columns)
+
+def get_comuna_by_id(id):
+    session = SessionLocal()
+    comuna = session.query(Comuna).filter_by(id=id).first()
+    session.close()
+    return comuna
+
+def get_region_by_id(id):
+    session = SessionLocal()
+    region = session.query(Region).filter_by(id=id).first()
+    session.close()
+    return region
+
+def get_fotos(act_id):
+    session = SessionLocal()
+    fotos = session.query(Foto).filter_by(actividad_id=act_id).all()
+    session.close()
+    return fotos
+
+def get_tema(act_id):
+    session = SessionLocal()
+    tema = session.query(ActividadTema).filter_by(actividad_id=act_id).first()
+    session.close()
+    return tema
+
+def get_contact(act_id):
+    session = SessionLocal()
+    contactos = session.query(ContactarPor).filter_by(actividad_id=act_id).all()
+    session.close()
+    return contactos
+
+# fill tables
+
+def create_img(ruta, nombre, act_id):
+    session = SessionLocal()
+    new_img = Foto(ruta_archivo=ruta, nombre_archivo=nombre, actividad_id=act_id)
+    session.add(new_img)
+    session.commit()
+    session.close()
+
+def create_contact(contacto, info_contact, act_id):
+    session = SessionLocal()
+    new_contact = ContactarPor(nombre=info_contact, identificador=contacto, actividad_id=act_id)
+    session.add(new_contact)
+    session.commit()
+    session.close()
+
+def create_theme(tema, info_tema, act_id):
+    session = SessionLocal()
+    if not info_tema:
+        new_theme = ActividadTema(tema=tema, glosa_otro=None, actividad_id=act_id) 
+    else:
+        new_theme = ActividadTema(tema=tema, glosa_otro=info_tema, actividad_id=act_id)
+    session.add(new_theme)
+    session.commit()
+    session.close()
+
+def create_activitie(comuna, sector, nombre, email, tel, inicio, fin, descripcion):
+    session = SessionLocal()
+    comuna_id = session.query(Comuna).filter_by(nombre=comuna).first()
+    new_act = Actividad(comuna_id=comuna_id, sector=sector, nombre=nombre, email=email, celular=tel, 
+                        dia_hora_inicio=inicio, dia_hora_termino=fin, descripcion=descripcion)
+    session.add(new_act)
+    act_id = new_act.id
+    session.commit()
+    session.close()
+    return act_id
+
+
