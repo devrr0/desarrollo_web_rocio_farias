@@ -80,4 +80,5 @@ def validate_files(files):
         return True
 
 # Implementar una función que realice todas las validaciones    
-# def validate_form(data): ...    
+def validate_form(data): 
+    return

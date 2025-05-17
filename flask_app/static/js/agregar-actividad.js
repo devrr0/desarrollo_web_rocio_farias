@@ -262,13 +262,11 @@ const validateForm = () => {
 };
 
 
-// Agregar informacion de contacto
-let cnt_contacts = 0; 
-let list_contacts = {}; 
+// Agregar informacion de contacto 
 const addContact = () => {
-    let contact = document.getElementById("select-contact");
-    let info = document.getElementById("info-contact");
-    let infoText = document.getElementById("id-info");
+    let cnt_contacts = document.querySelectorAll('select[id^="select-contact"]').length;
+    let contact = document.getElementById("select-contact"+cnt_contacts);
+    let info = document.getElementById("info-contact"+cnt_contacts);
     let errorMsg = document.getElementById("contact-error");
   
     if(cnt_contacts >= 5){
@@ -286,45 +284,61 @@ const addContact = () => {
             return; 
         }
     
-        // agregar a la lista la info de contacto
-        if(!list_contacts.hasOwnProperty(contact.value)) {
-            list_contacts[contact.value] = [];
-        }
-        list_contacts[contact.value].push(info.value);
+        createContactElem() // agregar el nuevo select e input
         errorMsg.innerText = "";
-        cnt_contacts += 1;
-        
-        const entry = document.createElement("div");
-        entry.className = "info-line";
-        
-        const span = document.createElement("span");
-        span.innerText = `${info.value} (${contact.value})`;
-        
-        const removeBtn = document.createElement("button");
-        removeBtn.innerText = "Eliminar";
-        removeBtn.style.marginLeft = "10px";
-        removeBtn.addEventListener("click", () => {
-            infoText.removeChild(entry);
-            // eliminar de la lista la info de contacto
-            if (list_contacts[contact.value]) {
-                list_contacts[contact.value] = list_contacts[contact.value].filter(i => i !== info.value)
-                if(list_contacts[contact.value].length===0){
-                    delete list_contacts[contact.value];
-                }
-            }
+    }
+}
 
-            cnt_contacts -= 1;
-            if(cnt_contacts < 5){
-            errorMsg.innerText = "";
-            }
-            
-        });
-        
-        entry.appendChild(span);
-        entry.appendChild(removeBtn);
-        infoText.appendChild(entry);
-        
-        info.value = "";
+const createContactElem = () => {
+    let cnt_contacts = document.querySelectorAll('select[id^="select-contact"]').length; 
+
+    const wrapper = document.createElement("div");
+
+    // fila de select
+    const selectRow = document.createElement("div");
+    selectRow.className = "form-row";
+
+    const originalSelect = document.getElementById("select-contact1");
+    const select = originalSelect.cloneNode(true);
+    select.name = "select-contact${cnt_contacts}";
+    select.id = "select-contact${cnt_contacts}";
+    select.selectedIndex = 0;
+
+    selectRow.appendChild(select);
+
+    // fila de input
+    const inputRow = document.createElement("div");
+    inputRow.className = "form-row";
+
+    const originalInput = document.getElementById("info-contact1");
+    const input = originalInput.cloneNode(true);
+    input.name = "info-contact${cnt_contacts}";
+    input.id = "info-contact${cnt_contacts}";
+    input.value = "";
+
+    inputRow.appendChild(input);
+
+    // boton eliminar
+    const deleteBtn = document.createElement("button");
+    deleteBtn.type = "button";
+    deleteBtn.className = "submit-btn-form";
+    deleteBtn.innerText = "Eliminar";
+    deleteBtn.style.marginLeft = "10px";
+    deleteBtn.addEventListener("click", () => {
+        wrapper.remove();
+    });
+
+    selectRow.appendChild(deleteBtn);
+
+    // Agregar al DOM 
+    const referenceNode = document.querySelector(".contact-wrapper:last-of-type") || document.getElementById("info-contact1").parentElement;
+    referenceNode.parentNode.insertBefore(wrapper, referenceNode.nextSibling);
+
+    wrapper.appendChild(selectRow);
+    wrapper.appendChild(inputRow);
+
+    if (cnt_contacts >= 5) {
+        document.getElementById("add-contact").style.display = "none";
     }
 }
 
@@ -385,7 +399,7 @@ let btnBack = document.getElementById("btn-back");
 btnBack.addEventListener("click", redirectIndex);
 
 // agregar informacion de contacto
-let addInfoBtn = document.getElementById("add-info-btn");
+let addInfoBtn = document.getElementById("add-contact");
 addInfoBtn.addEventListener("click", addContact);
 
 // setear hora de termino
