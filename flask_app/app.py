@@ -1,4 +1,5 @@
 from flask import Flask, request, render_template, redirect, url_for, session
+from markupsafe import escape
 from utils.validations import validate_form
 from database import db
 from werkzeug.utils import secure_filename
@@ -105,25 +106,25 @@ def info_activitie(activitie_id):
 @app.route("/post-activitie", methods=["GET", "POST"])
 def post_activitie():
     if request.method == "POST":
-        region = request.form.get('select-region')
-        comuna = request.form.get('select-comuna')
-        sector = request.form.get('sector')
-        nombre = request.form.get('nombre')
-        email = request.form.get('email')
-        tel = request.form.get('tel')
+        region = escape(request.form.get('select-region'))
+        comuna = escape(request.form.get('select-comuna'))
+        sector = escape(request.form.get('sector'))
+        nombre = escape(request.form.get('nombre'))
+        email = escape(request.form.get('email'))
+        tel = escape(request.form.get('tel'))
         inicio = request.form.get('inicio')
         termino = request.form.get('termino')
-        descripcion = request.form.get('descripcion')
-        tema = request.form.get('select-tema')
-        info_tema = request.form.get('info-tema')   # si es que se selecciono otro
+        descripcion = escape(request.form.get('descripcion'))
+        tema = escape(request.form.get('select-tema'))
+        info_tema = escape(request.form.get('info-tema'))   # si es que se selecciono otro
 
         contactos = []  
         i = 1
         while True:
             contact_id = f"select-contact{i}"
             info_id = f"info-contact{i}"
-            contact = request.form.get(contact_id)
-            info = request.form.get(info_id)
+            contact = escape(request.form.get(contact_id))
+            info = escape(request.form.get(info_id))
 
             if not contact and not info:
                 break 
