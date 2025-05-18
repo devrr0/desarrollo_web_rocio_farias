@@ -1,6 +1,6 @@
 
 const redirectIndex = () => {
-    window.location.href = "../html/index.html";
+    window.location.href = "../home";
 };
 
 // Validacion Region y Comuna
@@ -87,16 +87,12 @@ const validateTema = (tema, info) => {
 };
 
 // Validacion Fotos
-const validateFiles = (files) => {
-    if (!files) return false;
-    let lengthValid = 1 <= files.length && files.length <= 5;
+const validateFiles = (file, files_number) => {
+    if (!file) return false;
+    let lengthValid = 1 <= files_number && files_number <= 5;
     let typeValid = true;
-  
-    for (const file of files) {
-      // el tipo de archivo debe ser "image/<foo>" o "application/pdf"
-      let fileFamily = file.type.split("/")[0];
-      typeValid &&= fileFamily == "image" || file.type == "application/pdf";
-    }
+    let fileFamily = file.type.split("/")[0];
+    typeValid &&= fileFamily == "image" || file.type == "application/pdf";
     return lengthValid && typeValid;
   };
 
@@ -110,13 +106,10 @@ const validateForm = () => {
     let nombre = myForm["nombre"];
     let email = myForm["email"];
     let tel = myForm["tel"];
-    let contact = myForm["select-contact"];
-    let info_contact = myForm["info-contact"];
     let inicio = myForm["inicio"];
     let termino = myForm["termino"];
     let tema = myForm["select-tema"];
     let infoTema = myForm["info-tema"];
-    let input_files = myForm["files"];
 
     let isValid = true;
     // region
@@ -184,12 +177,29 @@ const validateForm = () => {
         tema.style.borderColor = "";
         infoTema.style.borderColor = "";
     }
-    // termino
-    if (!validateFiles (list_fotos)) {
-        input_files.style.borderColor = "red";
-        isValid = false;
-    } else{
-        input_files.style.borderColor = "";
+    // fotos
+    let cnt_files = document.querySelectorAll('input[id^="file"]').length;
+    for(let i=1; i<(cnt_files+1); i++){
+        let file = myForm["file"+i];
+        if(!validateFiles(file, cnt_files)){
+            file.style.borderColor = "red";
+            isValid = false;
+        }
+        else{
+            file.style.borderColor = "";
+        }
+    }
+    // contactos
+    let cnt_contacts = document.querySelectorAll('select[id^="select-contact"]').length;
+    for(let i=1; i<(cnt_contacts+1); i++){
+        let contact = myForm["select-contact"+i];
+        let info_contact = myForm["info-contact"+i];
+        if(!validateContact(info_contact, cnt_contacts)){
+            info_contact.style.borderColor = "red";
+            isValid = false;
+        } else{
+            info_contact.style.borderColor = "";
+        }    
     }
     
 
@@ -216,31 +226,10 @@ const validateForm = () => {
         submitButton.className = "submit-btn";
         submitButton.style.marginRight = "10px";
         submitButton.addEventListener("click", () => {
-            // crear formulario
-            if (contact) contact.remove();
-            if (info_contact) info_contact.remove();
-            if (input_files) input_files.remove();
-
-            const formData = new FormData(myForm);	// necesario ??
-
-            // agregar manualmente contactos
-            for (const contact in list_contacts) {
-                list_contacts[contact].forEach(i => {
-	                formData.append(`contactos[${i}][]`, i)})
-            }
-            // agregar manualmente fotos
-            for (const file of list_fotos) {
-                formData.append("fotos[]", file);
-            }
             // enviar formulario
-            formData.submit();
+            myForm.submit();
             validationBox.style.display="none";
             submitMessageElem.innerText="Hemos recibido su información, muchas gracias y suerte en su actividad";
-            // limpiar variables globales
-            list_contacts = {};
-            cnt_contacts = 0;
-            list_fotos = [];
-            cnt_fotos = 0;
         });
 
         let backButton = document.createElement("button");
@@ -276,7 +265,7 @@ const addContact = () => {
     else{
         if(contact.value==""){
             errorMsg.innerText = "Selecciona una opción de contacto";
-        return; 
+            return; 
         }
 
         if(info.value==""){
@@ -286,13 +275,17 @@ const addContact = () => {
     
         createContactElem() // agregar el nuevo select e input
         errorMsg.innerText = "";
+        return;
     }
 }
 
 const createContactElem = () => {
+    let errorMsg = document.getElementById("contact-error");
     let cnt_contacts = document.querySelectorAll('select[id^="select-contact"]').length; 
+    let cnt_contacts_n = cnt_contacts+1;
 
     const wrapper = document.createElement("div");
+    wrapper.className = "contact-wrapper";
 
     // fila de select
     const selectRow = document.createElement("div");
@@ -300,9 +293,10 @@ const createContactElem = () => {
 
     const originalSelect = document.getElementById("select-contact1");
     const select = originalSelect.cloneNode(true);
-    select.name = "select-contact${cnt_contacts}";
-    select.id = "select-contact${cnt_contacts}";
+    select.name = "select-contact"+cnt_contacts_n;
+    select.id = "select-contact"+cnt_contacts_n;
     select.selectedIndex = 0;
+    select.style = "margin-left: 90px"
 
     selectRow.appendChild(select);
 
@@ -312,9 +306,10 @@ const createContactElem = () => {
 
     const originalInput = document.getElementById("info-contact1");
     const input = originalInput.cloneNode(true);
-    input.name = "info-contact${cnt_contacts}";
-    input.id = "info-contact${cnt_contacts}";
+    input.name = "info-contact"+cnt_contacts_n;
+    input.id = "info-contact"+cnt_contacts_n;
     input.value = "";
+    input.style = "margin-left: 90px"
 
     inputRow.appendChild(input);
 
@@ -325,20 +320,23 @@ const createContactElem = () => {
     deleteBtn.innerText = "Eliminar";
     deleteBtn.style.marginLeft = "10px";
     deleteBtn.addEventListener("click", () => {
+        errorMsg.innerText = "";
         wrapper.remove();
     });
 
     selectRow.appendChild(deleteBtn);
 
-    // Agregar al DOM 
-    const referenceNode = document.querySelector(".contact-wrapper:last-of-type") || document.getElementById("info-contact1").parentElement;
-    referenceNode.parentNode.insertBefore(wrapper, referenceNode.nextSibling);
-
     wrapper.appendChild(selectRow);
     wrapper.appendChild(inputRow);
 
-    if (cnt_contacts >= 5) {
-        document.getElementById("add-contact").style.display = "none";
+    const lastWrapper = document.querySelector(".contact-wrapper:last-of-type");
+
+    if (lastWrapper) {
+        lastWrapper.parentNode.insertBefore(wrapper, lastWrapper.nextSibling);
+    } else {
+        const baseInput = document.getElementById("info-contact1");
+        const baseWrapper = baseInput.closest(".form-row").parentNode; 
+        baseWrapper.parentNode.insertBefore(wrapper, baseWrapper.nextSibling);
     }
 }
 
@@ -368,25 +366,69 @@ const infoTema = () => {
 
 
 // Agregar fotos
-let cnt_fotos = 0;
-let list_fotos = [];
 const addPhoto = () => {
+    let cnt_files = document.querySelectorAll('input[id^="file"]').length;
     let errorMsg = document.getElementById("files-error");
-    let listMsg = document.getElementById("files-list");
-    let file = document.getElementById("files");
-    if(cnt_fotos <= 4){
+    let file = document.getElementById("file"+cnt_files);
+    if(cnt_files <= 4){
         if(file && file.files.length > 0){
-            cnt_fotos += 1;
-            list_fotos.push(file.files[0]);
+            createFileElem()
             errorMsg.innerText="";
-            listMsg.innerText += `Se agregó la foto: ${file.value}\n`
+            return;
         }
         else{
             errorMsg.innerText="Por favor seleccionar una foto";
+            return;
         }
     }
     else{
         errorMsg.innerText="Se alcanzó el limite de fotos";
+        return;
+    }
+}
+
+const createFileElem = () => {
+    let errorMsg = document.getElementById("files-error");
+    let cnt_files = document.querySelectorAll('input[id^="file"]').length;
+    let cnt_files_n = cnt_files+1;
+
+    const wrapper = document.createElement("div");
+    wrapper.className = "file-wrapper";
+
+    const inputRow = document.createElement("div");
+    inputRow.className = "form-row";
+
+    const originalInput = document.getElementById("file1");
+    const input = originalInput.cloneNode(true);
+    input.name = "file"+cnt_files_n;
+    input.id = "file"+cnt_files_n;
+    input.value = "";
+    input.style = "margin-left: 90px"
+
+    inputRow.appendChild(input);
+
+    // boton eliminar
+    const deleteBtn = document.createElement("button");
+    deleteBtn.type = "button";
+    deleteBtn.className = "submit-btn-form";
+    deleteBtn.innerText = "Eliminar";
+    deleteBtn.style.marginLeft = "10px";
+    deleteBtn.addEventListener("click", () => {
+        errorMsg.innerText="";
+        wrapper.remove();
+    });
+
+    inputRow.appendChild(deleteBtn);
+    wrapper.appendChild(inputRow);
+
+    const lastWrapper = document.querySelector(".file-wrapper:last-of-type");
+
+    if (lastWrapper) {
+        lastWrapper.parentNode.insertBefore(wrapper, lastWrapper.nextSibling);
+    } else {
+        const baseInput = document.getElementById("file1");
+        const baseWrapper = baseInput.closest(".form-row").parentNode; 
+        baseWrapper.parentNode.insertBefore(wrapper, baseWrapper.nextSibling);
     }
 }
 
@@ -414,12 +456,3 @@ inputTema.addEventListener("change", infoTema);
 let addPhotoBtn = document.getElementById("add-photo-btn");
 addPhotoBtn.addEventListener("click", addPhoto);
 
-// resetear al cargar la página
-window.addEventListener("DOMContentLoaded", () => {
-    let myForm = document.forms["myForm"];
-    list_contacts = {};
-    cnt_contacts = 0;
-    list_fotos = [];
-    cnt_fotos = 0;
-    myForm.reset();  
-});

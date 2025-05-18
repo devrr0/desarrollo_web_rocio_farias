@@ -16,7 +16,11 @@ DROP SCHEMA IF EXISTS `tarea2` ;
 -- Schema tarea2
 -- -----------------------------------------------------
 CREATE SCHEMA IF NOT EXISTS `tarea2` DEFAULT CHARACTER SET utf8 ;
+
+GRANT ALL ON tarea2.* TO cc5002@localhost;
+
 USE `tarea2` ;
+
 
 -- -----------------------------------------------------
 -- Table `tarea2`.`region`

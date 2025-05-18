@@ -1,5 +1,5 @@
   // Select region y comuna
-  let data = {
+let data = {
     "Región de Tarapacá": ["Camiña", "Huara", "Pozo Almonte", "Iquique", "Pica", "Colchane", "Alto Hospicio"],
     "Región de Antofagasta": ["Tocopilla", "Maria Elena", "Ollague", "Calama", "San Pedro Atacama", "Sierra Gorda", "Mejillones", "Antofagasta", "Taltal"],
     "Región de Atacama": ["Diego de Almagro", "Chañaral", "Caldera", "Copiapo", "Tierra Amarilla", "Huasco", "Freirina", "Vallenar", "Alto del Carmen"],
@@ -16,7 +16,7 @@
     "Región de Los Ríos": ["Lanco", "Mariquina", "Panguipulli", "Mafil", "Valdivia", "Los Lagos", "Corral", "Paillaco", "Futrono", "Lago Ranco", "La Union", "Rio Bueno"],
     "Región Arica y Parinacota": ["Gral. Lagos", "Putre", "Arica", "Camarones"],
     "Región del Ñuble": ["Cobquecura", "Ñiquen", "San Fabian", "San Carlos", "Quirihue", "Ninhue", "Trehuaco", "San Nicolas", "Coihueco", "Chillan", "Portezuelo", "Pinto", "Coelemu", "Bulnes", "San Ignacio", "Ranquil", "Quillon", "El Carmen","Pemuco", "Yungay", "Chillan Viejo"]
-  };
+};
 
 const poblarRegiones = () => {
   let regionesSelect = document.getElementById("select-region");
@@ -54,26 +54,18 @@ let data2 = {
    "Otra": []};
 
 const poblarContacto = () => {
-  let contactoSelect = document.getElementById("select-contact");
-  for (const contacto in data2) {
+  let cnt_contacts = document.querySelectorAll('select[id^="select-contact"]').length;
+  for(let i=1; i<(cnt_contacts+1); i++){
+    let contactoSelect = document.getElementById("select-contact"+i);
+    for (const contacto in data2) {
       let option = document.createElement("option");
       option.value = contacto;
       option.text = contacto;
       contactoSelect.appendChild(option);
   }
+  }
 };
 
-const updateId = () => {
-  let contact = document.getElementById("select-contact");
-
-  let labelInfo = document.getElementById("label-info-contact")
-  let info = document.getElementById("info-contact");
-  let addInfoBtn = document.getElementById("add-info-btn");
-
-  info.style.display = "block";
-  labelInfo.style.display = "block";
-  addInfoBtn.style.display = "block";
-}
 
 // Select tema
 let data3 = {
@@ -100,7 +92,8 @@ const poblarTema = () => {
 }
 
 document.getElementById("select-region").addEventListener("change", updateComuna);
-document.getElementById("select-contact").addEventListener("change", updateId);
+//document.querySelectorAll('select[id^="select-contact"]').addEventListener("change", updateId);
+//document.getElementById("select-contact").addEventListener("change", updateId);
 
 window.onload = () => {
   poblarRegiones();

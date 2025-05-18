@@ -1,5 +1,5 @@
 const redirectIndex = () => {
-    window.location.href = "../html/index.html";
+    window.location.href = "../home";
 }
 
 const redirectInfo = (id) => {

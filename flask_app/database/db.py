@@ -9,7 +9,7 @@ DB_PASSWORD = "programacionweb"
 DB_HOST = "localhost"
 DB_PORT = 3306
 
-DATABASE_URL = f"mysql+pymysql://{DB_USERNAME}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
+DATABASE_URL = f'mysql+pymysql://{DB_USERNAME}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}'
 
 engine = create_engine(DATABASE_URL, echo=False, future=True)
 SessionLocal = sessionmaker(bind=engine)
@@ -53,6 +53,10 @@ class Actividad(Base):
     descripcion = Column(String(500), nullable=True)
 
     comuna = relationship("Comuna", back_populates="actividades")
+    fotos = relationship("Foto", back_populates="actividad", cascade="all, delete-orphan")
+    contactos = relationship("ContactarPor", back_populates="actividad", cascade="all, delete-orphan")
+    temas = relationship("ActividadTema", back_populates="actividad", cascade="all, delete-orphan")
+
 
 class Region(Base):
     __tablename__ = 'region'
@@ -100,7 +104,7 @@ class ActividadTema(Base):
     glosa_otro = Column(String(15), nullable=True)
     actividad_id = Column(Integer, ForeignKey('actividad.id'), nullable=False)
 
-    actividad = relationship("Actividad", back_populates="temas")    
+    actividad = relationship("Actividad", back_populates="temas")   
 
 # --- Database Functions ---
 

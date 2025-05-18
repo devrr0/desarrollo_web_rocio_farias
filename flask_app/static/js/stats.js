@@ -1,5 +1,5 @@
 const redirectIndex = () => {
-    window.location.href = "../html/index.html";
+    window.location.href = "../home";
 }
 
 let btnBack = document.getElementById("btn-back");

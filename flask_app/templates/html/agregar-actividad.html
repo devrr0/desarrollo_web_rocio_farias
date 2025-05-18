@@ -2,7 +2,7 @@
 <html lang="es">
     <head>
         <meta charset="utf-8">
-        <title>{% block title % } Agregar Actividad - Actividades recreativas {% endblock %}</title>
+        <title>Agregar Actividad - Actividades recreativas</title>
         {% block css %}
         <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -82,8 +82,7 @@
                         </div>
 
                         <div class="form-row">
-                            <label for="info-contact" id="label-info-contact" style="display: none;">Info</label>
-                            <input type="text" name="info-contact" id="info-contact1" placeholder="Id/URL de contacto" minlength="4" maxlength="50"> 
+                            <input type="text" name="info-contact" id="info-contact1" placeholder="Id/URL de contacto" minlength="4" maxlength="50" style="margin-left: 90px"> 
                         </div>
                     </div>
                     <p id="contact-error" style="margin-left: 90px; font-weight: bold;"></p>
@@ -123,10 +122,9 @@
                     <!-- Fotos-->
                     <div class="form-row">
                         <label for="files">Fotos</label>
-                        <input type="file" name="files" id="files" multiple accept="image/*,.pdf" required>
+                        <input type="file" name="files" id="file1" multiple accept="image/*,.pdf" required>
                         <button class="submit-btn-form" type="button" id="add-photo-btn">Agregar foto </button>
                     </div>
-                    <p id="files-list" style="margin-left: 90px; font-weight: bold;"></p>
                     <p id="files-error" style="margin-left: 90px; font-weight: bold;"></p>
                     
                 </form>
@@ -136,8 +134,8 @@
         </div>
         
         {% block javascript %}
-            <script lang="javascript" src="{{ url_for('static', filename='js/select.js') }}"></script>
             <script lang="javascript" src="{{ url_for('static', filename='js/agregar-actividad.js') }}"></script>
-         {% endblock %}
+            <script lang="javascript" src="{{ url_for('static', filename='js/select.js') }}"></script>
+        {% endblock %}
     </body>
 </html>    

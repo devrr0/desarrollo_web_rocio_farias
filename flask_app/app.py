@@ -18,7 +18,7 @@ app.config['UPLOAD_FOLDER'] = os.path.join('static', 'img')
 if not os.path.exists(app.config['UPLOAD_FOLDER']):
     os.makedirs(app.config['UPLOAD_FOLDER'])
 
-# db.init_app(app)
+#db.init_app(app)
 
 # --- Auth routes ---
 
@@ -26,22 +26,7 @@ if not os.path.exists(app.config['UPLOAD_FOLDER']):
 def recent_activities():
     PAGE_SIZE = 5
     data = []
-    for act in db.get_activities(page_size=PAGE_SIZE, offset=0):      
-        act_id = act.id
-
-        comuna = db.get_comuna_by_id(act.comuna_id)         
-        foto = db.get_fotos(act_id)[0]                         
-        tema = db.get_tema(act_id)                          
-        path_img = f"{foto.ruta_archivo}/{foto.nombre_archivo}" 
-
-        data.append({
-            "inicio" : act.dia_hora_inicio,
-            "termino" : act.dia_hora_fin,
-            "comuna" : comuna.nombre,
-            "sector" : act.sector,
-            "tema" : tema.glosa_otro if tema.glosa_otro else tema.tema,      
-            "img" : url_for('static', filename=path_img)
-        })
+    
 
     return render_template("html/index.html", data=data)
 

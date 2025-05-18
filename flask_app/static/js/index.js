@@ -1,6 +1,6 @@
 //redireccionar
 const redirectList = () => {
-    window.location.href = "../html/listado-actividades.html";
+    window.location.href = "../list-activities";
 }
 
 const redirectStats = () => {
@@ -8,7 +8,7 @@ const redirectStats = () => {
 }
 
 const redirectAdd = () => {
-    window.location.href = "../html/agregar-actividad.html";
+    window.location.href = "../post-activitie";
 }
 
 let btnList = document.getElementById("btn-list");
