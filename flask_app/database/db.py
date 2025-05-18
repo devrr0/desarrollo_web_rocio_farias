@@ -131,6 +131,29 @@ def get_region_by_id(id):
     session.close()
     return region
 
+def get_comuna_by_name(name):
+    session = SessionLocal()
+    comuna = session.query(Comuna).filter_by(nombre=name).first()
+    session.close()
+    return comuna
+
+def get_region_by_name(name):
+    session = SessionLocal()
+    region = session.query(Region).filter_by(nombre=name).first()
+    session.close()
+    return region
+
+def check_region_comuna(region_name, comuna_name):
+    session = SessionLocal()
+    region = get_region_by_name(region_name)
+    comuna = get_comuna_by_name(comuna_name)
+    if(region.id==comuna.region_id):
+        session.close()
+        return True
+    else:
+        session.close()
+        return False 
+
 def get_fotos(act_id):
     session = SessionLocal()
     fotos = session.query(Foto).filter_by(actividad_id=act_id).all()
@@ -143,11 +166,19 @@ def get_tema(act_id):
     session.close()
     return tema
 
+def check_valid_tema(tema):
+    valid = [e.value.lower() for e in TemaEnum]
+    return tema.lower() in valid
+
 def get_contact(act_id):
     session = SessionLocal()
     contactos = session.query(ContactarPor).filter_by(actividad_id=act_id).all()
     session.close()
     return contactos
+
+def check_valid_contact(contact):
+    valid = [e.value.lower() for e in ContactoEnum]
+    return contact.lower() in valid
 
 # fill tables
 
@@ -158,9 +189,9 @@ def create_img(ruta, nombre, act_id):
     session.commit()
     session.close()
 
-def create_contact(contacto, info_contact, act_id):
+def create_contact(contact, info_contact, act_id):
     session = SessionLocal()
-    new_contact = ContactarPor(nombre=info_contact, identificador=contacto, actividad_id=act_id)
+    new_contact = ContactarPor(nombre=contact, identificador=info_contact, actividad_id=act_id)
     session.add(new_contact)
     session.commit()
     session.close()

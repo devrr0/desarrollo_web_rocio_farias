@@ -83,7 +83,7 @@ def info_activitie(activitie_id):
     region = db.get_region_by_id(comuna.region_id)      
     tema = db.get_tema(act.id)
     contactos = db.get_contact(act.id)            
-    contacto_str = ', '.join([f"{c.nombre} ({c.identificador})" for c in contactos])
+    contacto_str = ', '.join([f"{c.identificador} ({c.nombre})" for c in contactos])
 
     data = {
         "region" : region.nombre,
@@ -141,7 +141,7 @@ def post_activitie():
                 fotos.append(file)
                 j += 1     
 
-        if validate_form(region, comuna, sector, nombre, email, tel, inicio, termino, descripcion, tema, info_tema, contactos, fotos):
+        if validate_form(region, comuna, sector, nombre, email, tel, inicio, termino, tema, info_tema, contactos, fotos):
             imgs = []
             for f in fotos:
                 # 1. generate random name for img

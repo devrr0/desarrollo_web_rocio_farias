@@ -1,14 +1,10 @@
 import re
 import filetype
 from datetime import datetime
+from database import db
 
-
-# verificar la base de datos ??
-def validate_region(value):
-    return True 
-
-def validate_comuna(value):
-    return True
+def validate_region_comuna(region, comuna):
+    return db.check_region_comuna(region, comuna)
 
 def validate_sector(value):
     return len(value) <= 100
@@ -23,21 +19,28 @@ def validate_email(value):
         return False
     if not (10 < len(value) <= 100):
         return False
-    re = r'^[\w.]+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$'
-    return re.test(value)
+    expr = r'^[\w.]+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$'
+    return bool(re.search(expr, value))
 
 def validate_phone(value):
     if not value:
         return False
     if not (len(value) == 12):
         return False
-    re = r'^\+569\d{8}$'
-    return re.test(value)
+    expr = r'^\+569\d{8}$'
+    return bool(re.search(expr, value))
 
-# validar aqui que sean menos de 5 contactos ??
-# le paso una lista con los contactos ??
 def validate_contact(value):
-    return 4 <= len(value) <= 50
+    if not value:
+        return False
+    if not (len(value) < 6):
+        return False
+    for c in value:
+        contact = c[0]
+        info = c[1]
+        valid_contact = db.check_valid_contact(contact)
+        valid_info = 4 <= len(info) <= 50
+        return valid_contact and valid_info
 
 def validate_init_time(value):
     try:
@@ -56,9 +59,11 @@ def validate_end_time(init, end):
 def validate_tema(tema, info):
     if not tema:
         return False
-    if tema == "Otro":
-        return 3 <= len(info) <= 15
-    return True
+    valid_tema = db.check_valid_tema(tema)
+    if info:
+        valid_info = 3 <= len(info) <= 15 
+        return valid_tema and valid_info
+    return valid_tema
 
 def validate_files(files):
     ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg", "gif"}
@@ -80,5 +85,8 @@ def validate_files(files):
         return True
 
 # Implementar una función que realice todas las validaciones    
-def validate_form(data): 
-    return
+def validate_form(region, comuna, sector, nombre, email, tel, inicio, termino, tema, info_tema, contactos, fotos): 
+    valid = (validate_region_comuna(region, comuna) and validate_sector(sector) and validate_organizacion(nombre) 
+             and validate_email(email) and validate_phone(tel) and validate_init_time(inicio) and validate_end_time(termino)
+             and validate_tema(tema, info_tema) and validate_contact(contactos) and validate_files(fotos))
+    return valid
