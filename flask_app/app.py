@@ -18,7 +18,6 @@ app.config['UPLOAD_FOLDER'] = os.path.join('static', 'img')
 if not os.path.exists(app.config['UPLOAD_FOLDER']):
     os.makedirs(app.config['UPLOAD_FOLDER'])
 
-#db.init_app(app)
 
 # --- Auth routes ---
 
@@ -26,7 +25,23 @@ if not os.path.exists(app.config['UPLOAD_FOLDER']):
 def recent_activities():
     PAGE_SIZE = 5
     data = []
-    
+    activities = db.get_activities(page_size=PAGE_SIZE, offset=0)
+    for act in activities:      
+        act_id = act.id
+
+        comuna = db.get_comuna_by_id(act.comuna_id)         
+        foto = db.get_fotos(act_id)[0]                         
+        tema = db.get_tema(act_id)                          
+        path_img = f"{foto.ruta_archivo}/{foto.nombre_archivo}" 
+
+        data.append({
+            "inicio" : act.dia_hora_inicio,
+            "termino" : act.dia_hora_fin,
+            "comuna" : comuna.nombre,
+            "sector" : act.sector,
+            "tema" : tema.glosa_otro if tema.glosa_otro else tema.tema,      
+            "img" : url_for('static', filename=path_img)
+        })    
 
     return render_template("html/index.html", data=data)
 
@@ -101,8 +116,30 @@ def post_activitie():
         descripcion = request.form.get('descripcion')
         tema = request.form.get('select-tema')
         info_tema = request.form.get('info-tema')   # si es que se selecciono otro
-        contactos = []  # implementar
-        fotos = []      # implementar
+
+        contactos = []  
+        i = 1
+        while True:
+            contact_id = f"select-contact{i}"
+            info_id = f"info-contact{i}"
+            contact = request.form.get(contact_id)
+            info = request.form.get(info_id)
+
+            if not contact and not info:
+                break 
+            contactos.append((contact, info))
+            i += 1
+
+        fotos = [] 
+        j = 1
+        while True:
+            file_id = f"file{j}"
+            if file_id not in request.files:
+                break
+            file = request.files[file_id]
+            if file and file.filename != "":
+                fotos.append(file)
+                j += 1     
 
         if validate_form(region, comuna, sector, nombre, email, tel, inicio, termino, descripcion, tema, info_tema, contactos, fotos):
             imgs = []
@@ -127,11 +164,8 @@ def post_activitie():
             # agregar tema
             db.create_theme(tema, info_tema, act_id)
             # agregar contacto
-            # for c in contactos:
-                # db.create_contact(...)
-            # primero definir que tengo en la lista contactos
-
-            
+            for c in contactos:
+                db.create_contact(c[0], c[1], act_id)
 
         return redirect(url_for("recent_activities"))  
     
