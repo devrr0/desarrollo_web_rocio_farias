@@ -50,8 +50,8 @@ const validatePhoneNumber = (phoneNumber) => {
 // Validacion Contacto
 const validateContact = (input, contact_number) => {
     // recorrrer la lista de info de contacto y checkear el largo de c/u
-    let minLength = input >= 4;
-    let maxLength = input <= 50;
+    let minLength = input.value.length >= 4;
+    let maxLength = input.value.length <= 50;
     let max_contacts = contact_number <= 5;
     
     return minLength && maxLength && max_contacts;
@@ -93,7 +93,7 @@ const validateFiles = (file, files_number) => {
     let typeValid = true;
     let fileFamily = file.type.split("/")[0];
     typeValid &&= fileFamily == "image" || file.type == "application/pdf";
-    return lengthValid && typeValid;
+    return lengthValid; // && typeValid;
   };
 
 
@@ -178,9 +178,30 @@ const validateForm = () => {
         infoTema.style.borderColor = "";
     }
     // fotos
+    let cnt_files = document.querySelectorAll('input[id^="file"]').length;
+    for(let i=1; i<(cnt_files+1); i++){
+        let file = myForm["file"+i];
+        if(!validateFiles(file, cnt_files)){
+            file.style.borderColor = "red";
+            isValid = false;
+        }
+        else{
+            file.style.borderColor = "";
+        }
+    }
+    // contactos
+    let cnt_contacts = document.querySelectorAll('select[id^="select-contact"]').length;
+    for(let i=1; i<(cnt_contacts+1); i++){
+        let contact = myForm["select-contact"+i];
+        let info_contact = myForm["info-contact"+i];
+        if(!validateContact(info_contact, cnt_contacts)){
+            info_contact.style.borderColor = "red";
+            isValid = false;
+        } else{
+            info_contact.style.borderColor = "";
+        }    
+    }
     
-    
-
     let validationBox = document.getElementById("val-box");
     let validationMessageElem = document.getElementById("val-msg");
     let validationListElem = document.getElementById("val-list");
@@ -207,8 +228,6 @@ const validateForm = () => {
         submitButton.addEventListener("click", () => {
             // enviar formulario
             myForm.submit();
-            //validationBox.style.display="none";
-            //submitMessageElem.innerText="Hemos recibido su información, muchas gracias y suerte en su actividad";
         });
 
         let backButton = document.createElement("button");
