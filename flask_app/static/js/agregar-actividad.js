@@ -178,29 +178,7 @@ const validateForm = () => {
         infoTema.style.borderColor = "";
     }
     // fotos
-    let cnt_files = document.querySelectorAll('input[id^="file"]').length;
-    for(let i=1; i<(cnt_files+1); i++){
-        let file = myForm["file"+i];
-        if(!validateFiles(file, cnt_files)){
-            file.style.borderColor = "red";
-            isValid = false;
-        }
-        else{
-            file.style.borderColor = "";
-        }
-    }
-    // contactos
-    let cnt_contacts = document.querySelectorAll('select[id^="select-contact"]').length;
-    for(let i=1; i<(cnt_contacts+1); i++){
-        let contact = myForm["select-contact"+i];
-        let info_contact = myForm["info-contact"+i];
-        if(!validateContact(info_contact, cnt_contacts)){
-            info_contact.style.borderColor = "red";
-            isValid = false;
-        } else{
-            info_contact.style.borderColor = "";
-        }    
-    }
+    
     
 
     let validationBox = document.getElementById("val-box");
@@ -222,14 +200,15 @@ const validateForm = () => {
 
         // Agregar botones para enviar el formulario o volver
         let submitButton = document.createElement("button");
+        submitButton.setAttribute("type", "button"); 
         submitButton.innerText = "Sí, estoy seguro";
         submitButton.className = "submit-btn";
         submitButton.style.marginRight = "10px";
         submitButton.addEventListener("click", () => {
             // enviar formulario
             myForm.submit();
-            validationBox.style.display="none";
-            submitMessageElem.innerText="Hemos recibido su información, muchas gracias y suerte en su actividad";
+            //validationBox.style.display="none";
+            //submitMessageElem.innerText="Hemos recibido su información, muchas gracias y suerte en su actividad";
         });
 
         let backButton = document.createElement("button");
@@ -421,15 +400,11 @@ const createFileElem = () => {
     inputRow.appendChild(deleteBtn);
     wrapper.appendChild(inputRow);
 
-    const lastWrapper = document.querySelector(".file-wrapper:last-of-type");
+    const form = document.querySelector('form[name="myForm"]');
+    const baseFileInput = document.getElementById("file1");
+    const baseRow = baseFileInput.closest(".form-row");
 
-    if (lastWrapper) {
-        lastWrapper.parentNode.insertBefore(wrapper, lastWrapper.nextSibling);
-    } else {
-        const baseInput = document.getElementById("file1");
-        const baseWrapper = baseInput.closest(".form-row").parentNode; 
-        baseWrapper.parentNode.insertBefore(wrapper, baseWrapper.nextSibling);
-    }
+    form.insertBefore(wrapper, errorMsg);
 }
 
 // validar forms

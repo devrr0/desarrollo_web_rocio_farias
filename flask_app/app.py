@@ -7,6 +7,7 @@ import hashlib
 import filetype
 import os
 import uuid
+from datetime import datetime
 
 UPLOAD_FOLDER = 'static/uploads'
 
@@ -16,18 +17,13 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://cc5002:programacionweb@
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['UPLOAD_FOLDER'] = os.path.join('static', 'img') 
 
-if not os.path.exists(app.config['UPLOAD_FOLDER']):
-    os.makedirs(app.config['UPLOAD_FOLDER'])
-
-
 # --- Auth routes ---
 
 @app.route("/home", methods=["GET"])
 def recent_activities():
     PAGE_SIZE = 5
     data = []
-    activities = db.get_activities(page_size=PAGE_SIZE, offset=0)
-    for act in activities:      
+    for act in db.get_activities(page_size=PAGE_SIZE, offset=0):      
         act_id = act.id
 
         comuna = db.get_comuna_by_id(act.comuna_id)         
@@ -37,10 +33,10 @@ def recent_activities():
 
         data.append({
             "inicio" : act.dia_hora_inicio,
-            "termino" : act.dia_hora_fin,
+            "termino" : act.dia_hora_termino,
             "comuna" : comuna.nombre,
             "sector" : act.sector,
-            "tema" : tema.glosa_otro if tema.glosa_otro else tema.tema,      
+            "tema" : tema.glosa_otro if tema.glosa_otro else tema.tema.value,      
             "img" : url_for('static', filename=path_img)
         })    
 
@@ -65,10 +61,10 @@ def all_activities():
 
         data.append({
             "inicio" : act.dia_hora_inicio,
-            "termino" : act.dia_hora_fin,
+            "termino" : act.dia_hora_termino,
             "comuna" : comuna.nombre,
             "sector" : act.sector,
-            "tema" : tema.glosa_otro if tema.glosa_otro else tema.tema,
+            "tema" : tema.glosa_otro if tema.glosa_otro else tema.tema.value,
             "organizador" :  act.nombre,      
             "img" : url_for('static', filename=path_img)
         })
@@ -84,7 +80,7 @@ def info_activitie(activitie_id):
     region = db.get_region_by_id(comuna.region_id)      
     tema = db.get_tema(act.id)
     contactos = db.get_contact(act.id)            
-    contacto_str = ', '.join([f"{c.identificador} ({c.nombre})" for c in contactos])
+    contacto_str = ', '.join([f"{c.identificador} ({c.nombre.value})" for c in contactos])
 
     data = {
         "region" : region.nombre,
@@ -93,56 +89,51 @@ def info_activitie(activitie_id):
         "organizador" : act.nombre,
         "contacto" : contacto_str,
         "inicio" : act.dia_hora_inicio,
-        "termino" : act.dia_hora_fin,
-        "tema" : tema.glosa_otro if tema.glosa_otro else tema.tema,
+        "termino" : act.dia_hora_termino,
+        "tema" : tema.glosa_otro if tema.glosa_otro else tema.tema.value,
         "descripcion" : act.descripcion
     }
 
     fotos = db.get_fotos(act.id)
-    data_img = [{url_for('static', filename=f"{f.ruta_archivo}/{f.nombre_archivo}" )} for f in fotos]
+    data_img = [f'static/{f.ruta_archivo}/{f.nombre_archivo}' for f in fotos] #data_img = [{url_for('static', filename=f"{f.ruta_archivo}/{f.nombre_archivo}" )} for f in fotos]
 
-    return render_template("html/info-act.html", act=data, fotos=data_img)
+    return render_template("html/info-act.html", act=data, fotos=fotos)
 
 @app.route("/post-activitie", methods=["GET", "POST"])
 def post_activitie():
     if request.method == "POST":
-        region = escape(request.form.get('select-region'))
-        comuna = escape(request.form.get('select-comuna'))
-        sector = escape(request.form.get('sector'))
-        nombre = escape(request.form.get('nombre'))
-        email = escape(request.form.get('email'))
-        tel = escape(request.form.get('tel'))
-        inicio = request.form.get('inicio')
-        termino = request.form.get('termino')
-        descripcion = escape(request.form.get('descripcion'))
-        tema = escape(request.form.get('select-tema'))
-        info_tema = escape(request.form.get('info-tema'))   # si es que se selecciono otro
+        region = request.form.get('select-region')
+        comuna = request.form.get('select-comuna')
+        sector = request.form.get('sector')
+        nombre = request.form.get('nombre')
+        email = request.form.get('email')
+        tel = request.form.get('tel')
+        inicio = datetime.strptime(request.form.get('inicio'), "%Y-%m-%dT%H:%M") #request.form.get('inicio')
+        termino = datetime.strptime(request.form.get('termino'), "%Y-%m-%dT%H:%M") if request.form.get('termino') else None#request.form.get('termino')
+        descripcion = request.form.get('descripcion')
+        tema = request.form.get('select-tema')
+        info_tema = request.form.get('info-tema')   # si es que se selecciono otro
 
         contactos = []  
-        i = 1
-        while True:
+        for i in range(6):
             contact_id = f"select-contact{i}"
             info_id = f"info-contact{i}"
-            contact = escape(request.form.get(contact_id))
-            info = escape(request.form.get(info_id))
-
-            if not contact and not info:
-                break 
+            contact = request.form.get(contact_id)
+            info = request.form.get(info_id)
+            if not contact:
+                continue 
             contactos.append((contact, info))
-            i += 1
 
         fotos = [] 
-        j = 1
-        while True:
+        for j in range(6):
             file_id = f"file{j}"
             if file_id not in request.files:
-                break
+                continue
             file = request.files[file_id]
             if file and file.filename != "":
-                fotos.append(file)
-                j += 1     
+                fotos.append(file)          
 
-        if validate_form(region, comuna, sector, nombre, email, tel, inicio, termino, tema, info_tema, contactos, fotos):
+        if validate_form(region, comuna, sector, nombre, email, tel, request.form.get('inicio'), request.form.get('termino'), tema, info_tema, contactos, fotos):
             imgs = []
             for f in fotos:
                 # 1. generate random name for img
@@ -173,7 +164,9 @@ def post_activitie():
     elif request.method == "GET":
         return render_template("html/agregar-actividad.html")
 
-
+@app.route("/stats", methods=["GET"])
+def stats():
+    return render_template("html/stats.html")
 
 if __name__ == "__main__":
     app.run(debug=True)

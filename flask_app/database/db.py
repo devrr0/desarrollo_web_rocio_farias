@@ -2,11 +2,12 @@ from sqlalchemy import create_engine, Column, Integer, BigInteger, String, Forei
 from sqlalchemy.orm import sessionmaker, declarative_base, relationship
 import enum
 import json
+import unicodedata
 
-DB_NAME = "tarea2"
-DB_USERNAME = "cc5002"
-DB_PASSWORD = "programacionweb"
-DB_HOST = "localhost"
+DB_NAME = 'tarea2'
+DB_USERNAME = 'cc5002'
+DB_PASSWORD = 'programacionweb'
+DB_HOST = 'localhost'
 DB_PORT = 3306
 
 DATABASE_URL = f'mysql+pymysql://{DB_USERNAME}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}'
@@ -18,25 +19,27 @@ Base = declarative_base()
 
 # --- ENUMs ---
 class ContactoEnum(enum.Enum):
-    WHATSAPP = "WhatsApp"
-    TELEGRAM = "Telegram"
+    WHATSAPP = "whatsapp"
+    TELEGRAM = "telegram"
     X = "X"
-    INSTAGRAM = "Instagram"
-    TIKTOK = "Tiktok"
+    INSTAGRAM = "instagram"
+    TIKTOK = "tiktok"
     OTRO = "Otro"
 
 class TemaEnum(enum.Enum):
-    MUSICA = "Musica"
-    DEPORTE = "Deporte"
-    CIENCIAS = "Ciencias"
-    RELIGION = "Religion"
-    POLITICA = "Politica"
-    TECNOLOGIA = "Tecnologia"
-    JUEGOS = "Juegos"
-    BAILE = "Baile"
-    COMIDA = "Comida"
-    OTRO = "Otro"
+    MUSICA = "música"
+    DEPORTE = "deporte"
+    CIENCIAS = "ciencias"
+    RELIGION = "religión"
+    POLITICA = "política"
+    TECNOLOGIA = "tecnología"
+    JUEGOS = "juegos"
+    BAILE = "baile"
+    COMIDA = "comida"
+    OTRO = "otro"
   
+def get_enum_values(enum_class):
+    return [member.value for member in enum_class]
 
 # --- Models ---
 class Actividad(Base):
@@ -49,7 +52,7 @@ class Actividad(Base):
     email = Column(String(100), nullable=False)
     celular = Column(String(15), nullable=True)
     dia_hora_inicio = Column(DateTime, nullable=False)
-    dia_hora_fin = Column(DateTime, nullable=True)
+    dia_hora_termino = Column(DateTime, nullable=True)
     descripcion = Column(String(500), nullable=True)
 
     comuna = relationship("Comuna", back_populates="actividades")
@@ -90,7 +93,7 @@ class ContactarPor(Base):
     __tablename__ = 'contactar_por'
 
     id = Column(Integer, primary_key=True)
-    nombre = Column(Enum(ContactoEnum), nullable=False)
+    nombre = Column(Enum(ContactoEnum, values_callable=get_enum_values), nullable=False)
     identificador = Column(String(150), nullable=False)
     actividad_id = Column(Integer, ForeignKey('actividad.id'), nullable=False)
 
@@ -100,7 +103,7 @@ class ActividadTema(Base):
     __tablename__ = 'actividad_tema'
 
     id = Column(Integer, primary_key=True)
-    tema = Column(Enum(TemaEnum), nullable=False)
+    tema = Column(Enum(TemaEnum, values_callable=get_enum_values), nullable=False)
     glosa_otro = Column(String(15), nullable=True)
     actividad_id = Column(Integer, ForeignKey('actividad.id'), nullable=False)
 
@@ -108,7 +111,16 @@ class ActividadTema(Base):
 
 # --- Database Functions ---
 
+def limpiar_texto(texto):
+    return texto.lower()
+
 # get from database  
+
+def get_activitie_by_id(act_id):
+    session = SessionLocal()
+    act = session.query(Actividad).filter_by(id=act_id).first()
+    session.close()
+    return act
 
 def get_activities(page_size, offset):
     session = SessionLocal()
@@ -191,29 +203,31 @@ def create_img(ruta, nombre, act_id):
 
 def create_contact(contact, info_contact, act_id):
     session = SessionLocal()
-    new_contact = ContactarPor(nombre=contact, identificador=info_contact, actividad_id=act_id)
+    contact_enum = ContactoEnum(limpiar_texto(contact))
+    new_contact = ContactarPor(nombre=contact_enum, identificador=info_contact, actividad_id=act_id)
     session.add(new_contact)
     session.commit()
     session.close()
 
 def create_theme(tema, info_tema, act_id):
     session = SessionLocal()
+    tema_enum = TemaEnum(limpiar_texto(tema))
     if not info_tema:
-        new_theme = ActividadTema(tema=tema, glosa_otro=None, actividad_id=act_id) 
+        new_theme = ActividadTema(tema=tema_enum, glosa_otro=None, actividad_id=act_id) 
     else:
-        new_theme = ActividadTema(tema=tema, glosa_otro=info_tema, actividad_id=act_id)
+        new_theme = ActividadTema(tema=tema_enum, glosa_otro=info_tema, actividad_id=act_id)
     session.add(new_theme)
     session.commit()
     session.close()
 
 def create_activitie(comuna, sector, nombre, email, tel, inicio, fin, descripcion):
     session = SessionLocal()
-    comuna_id = session.query(Comuna).filter_by(nombre=comuna).first()
-    new_act = Actividad(comuna_id=comuna_id, sector=sector, nombre=nombre, email=email, celular=tel, 
+    comuna_id = get_comuna_by_name(comuna)
+    new_act = Actividad(comuna_id=comuna_id.id, sector=sector, nombre=nombre, email=email, celular=tel, 
                         dia_hora_inicio=inicio, dia_hora_termino=fin, descripcion=descripcion)
     session.add(new_act)
-    act_id = new_act.id
     session.commit()
+    act_id = new_act.id
     session.close()
     return act_id
 

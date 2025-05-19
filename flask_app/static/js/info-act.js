@@ -3,7 +3,7 @@ const redirectIndex = () => {
 }
 
 const redirectList = () => {
-    window.location.href = "../html/list-activities";
+    window.location.href = "../list-activities";
 }
 
 const expandImage = (btn) => {

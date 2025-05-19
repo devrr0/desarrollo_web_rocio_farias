@@ -16,6 +16,16 @@
             <h1> Listado de Actividades</h1>
         </div>
 
+        <div style="margin-bottom: 10px;">
+            {% if page > 1 %}
+                <a href="{{ url_for('all_activities', page=page-1) }}" class="submit-btn-list">Anterior</a>
+            {% endif %}
+            <span>Página {{ page }} de {{ total_pages }}</span>
+            {% if total_pages > page %}
+                <a href="{{ url_for('all_activities', page=page+1) }}" class="submit-btn-list">Siguiente</a>
+            {% endif %}
+        </div>
+
         <!-- Tabla -->
         {% block content %}
         <div class="table-container">
@@ -45,15 +55,6 @@
                     {% endfor%}
                 {% endif %}
             </table>
-            <div>
-                {% if page > 1 %}
-                    <a href="{{ url_for('all_activities', page=page-1) }}" class="submit-btn">Anterior</a>
-                {% endif %}
-                <span>Página {{ page }} de {{ total_pages }}</span>
-                {% if total_pagea > page %}
-                    <a href="{{ url_for('all_activities', page=page+1) }}" class="submit-btn">Siguiente</a>
-                {% endif %}
-            </div>
          </div>
          {% endblock %}
          {% block javascript %}

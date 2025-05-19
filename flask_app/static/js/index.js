@@ -4,7 +4,7 @@ const redirectList = () => {
 }
 
 const redirectStats = () => {
-    window.location.href = "../html/stats.html";
+    window.location.href = "../stats";
 }
 
 const redirectAdd = () => {

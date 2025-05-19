@@ -87,9 +87,9 @@
             <tr> 
                 <td style="height: 150px;"><strong>Fotos</strong></td>
                 <td> 
-                    {% foto in fotos %}
+                    {% for f in fotos %}
                     <div class="image-wrapper">
-                        <img src="{{ foto.img }}" alt="Foto actividad" width="320" height="240"> <br>
+                        <img src="{{ url_for('static', filename=f.ruta_archivo ~ '/' ~ f.nombre_archivo) }}" alt="Foto actividad" width="320" height="240"> <br>
                         <button onclick="expandImage(this)">Expandir</button>
                     </div>
                     {% endfor%}

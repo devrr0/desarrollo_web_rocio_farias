@@ -51,6 +51,8 @@ def validate_init_time(value):
         return False
 
 def validate_end_time(init, end):
+    if not end:
+        return True
     try:
         return datetime.fromisoformat(init) < datetime.fromisoformat(end)
     except ValueError:
@@ -87,6 +89,6 @@ def validate_files(files):
 # Implementar una función que realice todas las validaciones    
 def validate_form(region, comuna, sector, nombre, email, tel, inicio, termino, tema, info_tema, contactos, fotos): 
     valid = (validate_region_comuna(region, comuna) and validate_sector(sector) and validate_organizacion(nombre) 
-             and validate_email(email) and validate_phone(tel) and validate_init_time(inicio) and validate_end_time(termino)
+             and validate_email(email) and validate_phone(tel) and validate_init_time(inicio) and validate_end_time(inicio, termino)
              and validate_tema(tema, info_tema) and validate_contact(contactos) and validate_files(fotos))
     return valid
