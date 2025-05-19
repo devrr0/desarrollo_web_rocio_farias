@@ -95,7 +95,7 @@ def info_activitie(activitie_id):
     }
 
     fotos = db.get_fotos(act.id)
-    data_img = [f'static/{f.ruta_archivo}/{f.nombre_archivo}' for f in fotos] #data_img = [{url_for('static', filename=f"{f.ruta_archivo}/{f.nombre_archivo}" )} for f in fotos]
+    data_img = [f'static/{f.ruta_archivo}/{f.nombre_archivo}' for f in fotos] 
 
     return render_template("html/info-act.html", act=data, fotos=fotos)
 
@@ -108,11 +108,11 @@ def post_activitie():
         nombre = request.form.get('nombre')
         email = request.form.get('email')
         tel = request.form.get('tel')
-        inicio = datetime.strptime(request.form.get('inicio'), "%Y-%m-%dT%H:%M") #request.form.get('inicio')
-        termino = datetime.strptime(request.form.get('termino'), "%Y-%m-%dT%H:%M") if request.form.get('termino') else None#request.form.get('termino')
+        inicio = datetime.strptime(request.form.get('inicio'), "%Y-%m-%dT%H:%M") 
+        termino = datetime.strptime(request.form.get('termino'), "%Y-%m-%dT%H:%M") if request.form.get('termino') else None
         descripcion = request.form.get('descripcion')
         tema = request.form.get('select-tema')
-        info_tema = request.form.get('info-tema')   # si es que se selecciono otro
+        info_tema = request.form.get('info-tema')   
 
         contactos = []  
         for i in range(6):
@@ -136,18 +136,15 @@ def post_activitie():
         if validate_form(region, comuna, sector, nombre, email, tel, request.form.get('inicio'), request.form.get('termino'), tema, info_tema, contactos, fotos):
             imgs = []
             for f in fotos:
-                # 1. generate random name for img
                 _filename = hashlib.sha256(
                     secure_filename(f.filename).encode("utf-8")
                     ).hexdigest()
                 _extension = filetype.guess(f).extension
                 img_filename = f"{_filename}_{str(uuid.uuid4())}.{_extension}"
 
-                # 2. save img as a file
                 f.save(os.path.join(app.config["UPLOAD_FOLDER"], img_filename))
                 imgs.append((img_filename,'img'))
 
-            # 3. save in db
             # agregar actividad
             act_id = db.create_activitie(comuna, sector, nombre, email, tel, inicio, termino, descripcion)
             # agregar imagenes
