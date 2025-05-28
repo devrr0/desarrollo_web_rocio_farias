@@ -310,20 +310,6 @@ const createContactElem = () => {
     input.style = "margin-left: 90px"
 
     inputRow.appendChild(input);
-
-    // boton eliminar
-    const deleteBtn = document.createElement("button");
-    deleteBtn.type = "button";
-    deleteBtn.className = "submit-btn-form";
-    deleteBtn.innerText = "Eliminar";
-    deleteBtn.style.marginLeft = "10px";
-    deleteBtn.addEventListener("click", () => {
-        errorMsg.innerText = "";
-        wrapper.remove();
-    });
-
-    selectRow.appendChild(deleteBtn);
-
     wrapper.appendChild(selectRow);
     wrapper.appendChild(inputRow);
 
@@ -404,19 +390,6 @@ const createFileElem = () => {
     input.style = "margin-left: 90px"
 
     inputRow.appendChild(input);
-
-    // boton eliminar
-    const deleteBtn = document.createElement("button");
-    deleteBtn.type = "button";
-    deleteBtn.className = "submit-btn-form";
-    deleteBtn.innerText = "Eliminar";
-    deleteBtn.style.marginLeft = "10px";
-    deleteBtn.addEventListener("click", () => {
-        errorMsg.innerText="";
-        wrapper.remove();
-    });
-
-    inputRow.appendChild(deleteBtn);
     wrapper.appendChild(inputRow);
 
     const form = document.querySelector('form[name="myForm"]');
