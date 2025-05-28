@@ -77,22 +77,15 @@ def all_activities():
 def info_activitie(activitie_id):
     act = db.get_activitie_by_id(activitie_id)
 
-    comuna = db.get_comuna_by_id(act.comuna_id)
-    region = db.get_region_by_id(comuna.region_id)      
+    comuna = db.get_comuna_by_id(act.comuna_id)   
     tema = db.get_tema(act.id)
-    contactos = db.get_contact(act.id)            
-    contacto_str = ', '.join([f"{c.identificador} ({c.nombre.value})" for c in contactos])
-
     data = {
-        "region" : region.nombre,
         "comuna" : comuna.nombre,
         "sector" : act.sector,
         "organizador" : act.nombre,
-        "contacto" : contacto_str,
         "inicio" : act.dia_hora_inicio,
         "termino" : act.dia_hora_termino,
         "tema" : tema.glosa_otro if tema.glosa_otro else tema.tema.value,
-        "descripcion" : act.descripcion
     }
 
     fotos = db.get_fotos(act.id)
