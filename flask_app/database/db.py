@@ -59,7 +59,7 @@ class Actividad(Base):
     fotos = relationship("Foto", back_populates="actividad", cascade="all, delete-orphan")
     contactos = relationship("ContactarPor", back_populates="actividad", cascade="all, delete-orphan")
     temas = relationship("ActividadTema", back_populates="actividad", cascade="all, delete-orphan")
-
+    contactos = relationship("Comentario", back_populates="actividad", cascade="all, delete-orphan")
 
 class Region(Base):
     __tablename__ = 'region'
@@ -108,6 +108,17 @@ class ActividadTema(Base):
     actividad_id = Column(Integer, ForeignKey('actividad.id'), nullable=False)
 
     actividad = relationship("Actividad", back_populates="temas")   
+
+class Comentario(Base):
+    __tablename__ = 'comentario'
+    id = Column(Integer, primary_key=True)
+    nombre = Column(String(80), nullable=False)
+    texto = Column(String(300), nullable=False)
+    fecha = Column(DateTime, nullable=False)
+    actividad_id = Column(Integer, ForeignKey('actividad.id'), nullable=False)
+
+    actividad = relationship("Actividad", back_populates="comentarios")
+
 
 # --- Database Functions ---
 
@@ -192,7 +203,20 @@ def check_valid_contact(contact):
     valid = [e.value.lower() for e in ContactoEnum]
     return contact.lower() in valid
 
+def get_comments(act_id):
+    session = SessionLocal()
+    comments = session.query(Comentario).filter_by(actividad_id=act_id).all()
+    session.close()
+    return comments
+
 # fill tables
+
+def create_comment(nombre, fecha, texto, act_id):
+    session = SessionLocal()
+    new_comment = Comentario(nombre=nombre, texto=texto, fecha=fecha, actividad_id=act_id)
+    session.add(new_comment)
+    session.commit()
+    session.close()
 
 def create_img(ruta, nombre, act_id):
     session = SessionLocal()
