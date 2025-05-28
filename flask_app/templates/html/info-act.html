@@ -11,13 +11,17 @@
     {% endblock %}
 </head>
 <body>
-    <button type="button" class="submit-btn" id="btn-back">Volver al inicio</button>
-    <button type="button" class="submit-btn" id="btn-list">Volver al listado</button>
+    <div class="navbar">
+        <img id="logo-id" src="{{ url_for('static', filename='img/calendar_logo.png') }}" alt="Logo">
+        <h1>Página de eventos</h1>
+        <a class="navbar-page" href="{{ url_for('recent_activities') }}">Inicio</a>
+        <a class="navbar-page" href="{{ url_for('all_activities') }}">Listado</a>
+    </div>
     {% block content %}
     <div class="main-container">
         <h1> Información de la Actividad</h1>
         <div id="image-box" class="image-box" style="display: none;">
-            <img id="image-elem" src="{{ url_for('static', filename='img/placeholder.jpg') }}" alt="Imagen ampliada" width="800" height="600">
+            <img id="image-elem" src="{{ url_for('static', filename='img/placeholder.png') }}" alt="Imagen ampliada" width="800" height="600">
             <button id="close-box" class="submit-btn-form">Cerrar</button>
         </div> 
     </div>
@@ -65,6 +69,36 @@
                 </td>    
             </tr>
         </table>
+    </div>
+    <div class="post-comment-container">
+        <form name="myForm" method="post" enctype="multipart/form-data"> 
+            <p class="small-text"><strong>Agregar comentario</strong></p>
+            <div class="form-row">
+                <label for="nombre">Nombre</label>
+                <input type="text" name="nombre" id="nombre" minlength="3" maxlength="80" style="margin-left: 30px;" required>
+            </div>
+            <div class="form-row">
+                <label for="comentario">Comentario</label>
+                <textarea name="comentario" id="comentario" cols="50" rows="4" style="margin-left: 30px;" required></textarea>
+            </div>
+        </form>
+        <button type="button" class="submit-btn" id="btn-add-com" style="width: 18%; display: block; margin-left: auto;">Agregar comentario</button>
+    </div>
+    <div class="main-container">
+        <h1> Comentarios </h1>
+        <div class="comment-column">
+            {% if comment%}
+                {% for comm in comment %}
+                <div class="main-container-comment">
+                    <p class="small-text"><strong>comm.nombre</strong></p>
+                    <p class="small-text">comm.fecha</p>
+                    <div class="comment-container">
+                        <p class="small-text">comm.comentario</p>
+                    </div>
+                </div>
+                {% endfor%}
+            {% endif %}
+        </div>
     </div>
     {% endblock %}
     {% block javascript %}

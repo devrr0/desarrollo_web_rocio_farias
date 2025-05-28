@@ -11,7 +11,11 @@
         {% endblock %}
     </head>
     <body>
-        <button type="button" class="submit-btn" id="btn-back">Volver al inicio</button>
+        <div class="navbar">
+            <img id="logo-id" src="{{ url_for('static', filename='img/calendar_logo.png') }}" alt="Logo">
+            <h1>Página de eventos</h1>
+            <a class="navbar-page" href="{{ url_for('recent_activities') }}">Inicio</a>
+        </div>
         {% block content %}
         <div class="main-container">
             <h1> Estadísticas</h1>
