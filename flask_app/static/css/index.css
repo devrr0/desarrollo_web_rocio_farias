@@ -1,8 +1,8 @@
 :root {
     --black-color: #000022;
     --background-color: #e8e6f071;
-    --purple-color: #de8efb;
-    --purple-hover-color: #a064b5;
+    --purple-color: #e4abf8;
+    --purple-hover-color: #c19dce;
     --gray-color:  #87868871;
     --gray-hover-color: #e1bfee;
 }
@@ -12,7 +12,7 @@ body {
     background-color: var(--background-color);
     width: 90%; 
     margin: 20px auto; 
-    font-family: "Source Code Pro", monospace;
+    font-family: "Raleway", sans-serif;
 }
 
 /* CONTAINER */
@@ -38,10 +38,10 @@ body {
     text-align: center;
     padding: 1.2em;
     border: .2em solid var(--black-color);
-    border-radius: 1.5em;
+    border-radius: 1.2em;
     font-weight: 600;
     font-size: 1.2rem; 
-    font-family: "Source Code Pro", monospace;
+    font-family: "Raleway", sans-serif;
 }
 
 .submit-btn:hover {
@@ -61,7 +61,7 @@ body {
 }
 
 .table-container > * {
-    font-family: "Source Code Pro", monospace;
+    font-family: "Raleway", sans-serif;
 }
 
 table {
@@ -184,8 +184,9 @@ tr.clickable:hover {
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 999;
-    background-color: white;
+    background-color:var(--gray-color);
     padding: 10px;
+    border-radius: 12px;
 }
 
 .image-wrapper {

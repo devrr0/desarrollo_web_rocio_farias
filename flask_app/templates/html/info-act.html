@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Raleway:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
     {% endblock %}
 </head>
 <body>
@@ -23,8 +23,7 @@
     </div>
 
     <div class="table-container" id="info-box">
-        <!-- Tabla 1-->
-        <h2>¿Dónde se realiza la actividad?</h2>
+        <!-- Tabla-->
         <table>
             <colgroup>
                 <col style="width: 15%; background-color: #87868871;">
@@ -38,28 +37,10 @@
                 <td><strong>Sector</strong></td>
                 <td>{{ act.sector }}</td>
             </tr>
-        </table>
-
-        <!-- Tabla 2-->
-        <h2>¿Quién organiza la actividad?</h2>
-        <table>
-            <colgroup>
-                <col style="width: 15%; background-color: #87868871;">
-                <col>
-            </colgroup>
             <tr> 
                 <td><strong>Nombre</strong></td>
                 <td>{{ act.organizador }}</td>
             </tr>
-        </table>
-
-        <!-- Tabla 3-->
-        <h2>¿Cuándo y de qué trata?</h2>
-        <table>
-            <colgroup>
-                <col style="width: 15%; background-color: #87868871;">
-                <col>
-            </colgroup>
             <tr> 
                 <td><strong>Inicio</strong></td>
                 <td>{{ act.inicio }}</td>
