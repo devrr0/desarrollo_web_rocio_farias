@@ -71,7 +71,7 @@
         </table>
     </div>
     <div class="post-comment-container">
-        <form name="myForm" method="post" enctype="multipart/form-data"> 
+        <form name="myForm" method="post" action="{{url_for('info_activitie', activitie_id=act.id)}}" enctype="multipart/form-data"> 
             <p class="small-text"><strong>Agregar comentario</strong></p>
             <div class="form-row">
                 <label for="nombre">Nombre</label>

@@ -1,6 +1,5 @@
 from flask import Flask, request, render_template, redirect, url_for, session
-from markupsafe import escape
-from utils.validations import validate_form
+from utils.validations import validate_form, validate_form_comment
 from database import db
 from werkzeug.utils import secure_filename
 import hashlib
@@ -73,25 +72,44 @@ def all_activities():
 
     return render_template("html/listado-actividades.html", data=data, page=page, total_pages=total_pages)
 
-@app.route("/activitie/<int:activitie_id>", methods=["GET"])
+@app.route("/activitie/<int:activitie_id>", methods=["GET", "POST"])
 def info_activitie(activitie_id):
-    act = db.get_activitie_by_id(activitie_id)
+    if request.method == "GET":
+        act = db.get_activitie_by_id(activitie_id)
 
-    comuna = db.get_comuna_by_id(act.comuna_id)   
-    tema = db.get_tema(act.id)
-    data = {
-        "comuna" : comuna.nombre,
-        "sector" : act.sector,
-        "organizador" : act.nombre,
-        "inicio" : act.dia_hora_inicio,
-        "termino" : act.dia_hora_termino,
-        "tema" : tema.glosa_otro if tema.glosa_otro else tema.tema.value,
-    }
+        comuna = db.get_comuna_by_id(act.comuna_id)   
+        tema = db.get_tema(act.id)
+        data = {
+            "id" : activitie_id,
+            "comuna" : comuna.nombre,
+            "sector" : act.sector,
+            "organizador" : act.nombre,
+            "inicio" : act.dia_hora_inicio,
+            "termino" : act.dia_hora_termino,
+            "tema" : tema.glosa_otro if tema.glosa_otro else tema.tema.value,
+        }
 
-    fotos = db.get_fotos(act.id)
-    data_img = [f'static/{f.ruta_archivo}/{f.nombre_archivo}' for f in fotos] 
+        comments = db.get_comments(act.id)
+        comentarios = []
+        for comm in comments:
+            comentarios.append({
+                "nombre" : comm.nombre,
+                "fecha" : comm.fecha,
+                "comentario" : comm.texto
+            })
 
-    return render_template("html/info-act.html", act=data, fotos=fotos)
+        fotos = db.get_fotos(act.id)
+        data_img = [f'static/{f.ruta_archivo}/{f.nombre_archivo}' for f in fotos] 
+
+        return render_template("html/info-act.html", act=data, fotos=fotos, comment=comentarios)
+    elif request.method == "POST":
+        nombre = request.form.get('nombre')
+        comentario = request.form.get('comentario')
+
+        if validate_form_comment(nombre, comentario):
+            db.create_comment(nombre, comentario, activitie_id)
+        return redirect(url_for("info_activitie"))    
+
 
 @app.route("/post-activitie", methods=["GET", "POST"])
 def post_activitie():

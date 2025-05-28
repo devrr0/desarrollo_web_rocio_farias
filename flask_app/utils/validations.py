@@ -85,6 +85,16 @@ def validate_files(files):
         if ftype_guess.mime not in ALLOWED_MIMETYPES:
             return False
         return True
+    
+def validate_nombre(value):
+    if not value:
+        return False
+    return 3 <= len(value) <= 80
+
+def validate_comentario(value):
+    if not value:
+        return False
+    return 5 <= len(value)
 
 # Implementar una función que realice todas las validaciones    
 def validate_form(region, comuna, sector, nombre, email, tel, inicio, termino, tema, info_tema, contactos, fotos): 
@@ -92,3 +102,6 @@ def validate_form(region, comuna, sector, nombre, email, tel, inicio, termino, t
              and validate_email(email) and validate_phone(tel) and validate_init_time(inicio) and validate_end_time(inicio, termino)
              and validate_tema(tema, info_tema) and validate_contact(contactos) and validate_files(fotos))
     return valid
+
+def validate_form_comment(nombre, texto):
+    return validate_nombre(nombre) and validate_comentario(texto)
