@@ -66,7 +66,8 @@ def all_activities():
             "sector" : act.sector,
             "tema" : tema.glosa_otro if tema.glosa_otro else tema.tema.value,
             "organizador" :  act.nombre,      
-            "img" : url_for('static', filename=path_img)
+            "img" : url_for('static', filename=path_img),
+            "id" : act.id
         })
     total_pages = (total_activities + PAGE_SIZE - 1) // PAGE_SIZE
 

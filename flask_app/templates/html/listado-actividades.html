@@ -42,8 +42,8 @@
                 </tr>
                 <!-- Contenido -->
                  {% if data %}
-                    {% for act in data%}
-                    <tr class="clickable" onclick="redirectInfo('{{ act.id }}')">
+                    {% for act in data %}
+                    <tr class="clickable" onclick="location.href='/activitie/{{ act.id }}'">
                         <td>{{ act.inicio }}</td>
                         <td>{{ act.termino }}</td>
                         <td>{{ act.comuna }}</td>
