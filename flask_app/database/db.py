@@ -1,6 +1,6 @@
-from sqlalchemy import create_engine, Column, Integer, BigInteger, String, ForeignKey, DateTime, Enum
+from sqlalchemy import create_engine, Column, Integer, BigInteger, String, ForeignKey, DateTime, Enum, TIMESTAMP
 from sqlalchemy.orm import sessionmaker, declarative_base, relationship
-import datetime
+from datetime import datetime
 import enum
 import json
 import unicodedata
@@ -60,7 +60,7 @@ class Actividad(Base):
     fotos = relationship("Foto", back_populates="actividad", cascade="all, delete-orphan")
     contactos = relationship("ContactarPor", back_populates="actividad", cascade="all, delete-orphan")
     temas = relationship("ActividadTema", back_populates="actividad", cascade="all, delete-orphan")
-    contactos = relationship("Comentario", back_populates="actividad", cascade="all, delete-orphan")
+    comentarios = relationship("Comentario", back_populates="actividad", cascade="all, delete-orphan")
 
 class Region(Base):
     __tablename__ = 'region'
@@ -115,7 +115,7 @@ class Comentario(Base):
     id = Column(Integer, primary_key=True)
     nombre = Column(String(80), nullable=False)
     texto = Column(String(300), nullable=False)
-    fecha = Column(DateTime, nullable=False, default=datetime.utcnow)
+    fecha = Column(TIMESTAMP, nullable=False, default=datetime.now)
     actividad_id = Column(Integer, ForeignKey('actividad.id'), nullable=False)
 
     actividad = relationship("Actividad", back_populates="comentarios")
@@ -212,7 +212,7 @@ def get_comments(act_id):
 
 # fill tables
 
-def create_comment(nombre, fecha, texto, act_id):
+def create_comment(nombre, texto, act_id):
     session = SessionLocal()
     new_comment = Comentario(nombre=nombre, texto=texto, actividad_id=act_id)
     session.add(new_comment)

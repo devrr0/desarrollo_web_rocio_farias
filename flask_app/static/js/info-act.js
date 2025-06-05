@@ -32,10 +32,7 @@ const validateComment = (comment) => {
     return minValid;
 };
 
-const validateForm = () => {
-    let myForm = document.forms["myForm"];
-    let nombre = myForm["nombre"];
-    let comentario = myForm["comentario"];
+const validateForm = (nombre, comentario) => {
     let problemMessageElem = document.getElementById("problem-msg");
 
     let isValid = true;
@@ -51,18 +48,48 @@ const validateForm = () => {
     } else{
         comentario.style.borderColor = "";
     }
-
-    if (!isValid){
-        problemMessageElem.innerText = "Hay problemas con el formulario";
-    }
-    else{
-        problemMessageElem.innerText = "Se ha subido correctamente su comentario";
-        myForm.submit();
-    }
+    return { nombre: nombre.value, comText: comentario.value, isValid: isValid };
 }
+
+let myForm = document.forms["myForm"];
+let nombreInput = myForm["nombre"];
+let comentarioInput = myForm["comentario"];
+let act_id = myForm["act_id"].value;
+const agregarComentario = () => {
+    let { nombre, comText, isValid } = validateForm(nombreInput, comentarioInput);
+    if (!isValid){
+        document.getElementById("problem-msg").innerText = "Hay problemas con el formulario";
+        return;
+    } 
+    fetch(myForm.action, {
+        method: "POST",
+        body: JSON.stringify({ nombre:nombre, comText: comText, act_id: act_id}),
+        credentials: "include",
+        cache: "no-cache",
+        headers: {
+            "Content-Type": "application/json",
+        },
+    })
+    .then((response) => {
+        if (!response.ok) {
+            throw new Error("Error uploading forms");
+        }
+    })
+    .then(data => {
+        document.getElementById("problem-msg").innerText = "Comentario agregado correctamente";
+        myForm.reset();
+    })
+    .catch((error) => {
+      console.error(
+        "There has been a problem with your fetch operation:",
+        error
+      );
+    });
+}
+
 
 let btnInfo = document.getElementById("close-box");
 let btnForms = document.getElementById("btn-add-com")
 
-btnForms.addEventListener("click", validateForm)
+btnForms.addEventListener("click", agregarComentario)
 btnInfo.addEventListener("click", redirectInfo);

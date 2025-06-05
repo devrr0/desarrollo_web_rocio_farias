@@ -71,11 +71,12 @@
         </table>
     </div>
     <div class="post-comment-container">
-        <form name="myForm" method="post" action="{{url_for('info_activitie', activitie_id=act.id)}}" enctype="multipart/form-data"> 
+        <form name="myForm" method="post" action="{{url_for('info_activitie', activitie_id=act.id)}}"> 
             <p class="small-text"><strong>Agregar comentario</strong></p>
             <div class="form-row">
                 <label for="nombre">Nombre</label>
                 <input type="text" name="nombre" id="nombre" minlength="3" maxlength="80" style="margin-left: 30px;" required>
+                <input type="hidden" name="act_id" id="act_id" value="{{ act.id }}">
             </div>
             <div class="form-row">
                 <label for="comentario">Comentario</label>

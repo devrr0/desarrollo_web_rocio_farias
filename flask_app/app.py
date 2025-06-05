@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, redirect, url_for, session
+from flask import Flask, request, render_template, redirect, url_for, session, jsonify
 from utils.validations import validate_form, validate_form_comment
 from database import db
 from werkzeug.utils import secure_filename
@@ -103,12 +103,16 @@ def info_activitie(activitie_id):
 
         return render_template("html/info-act.html", act=data, fotos=fotos, comment=comentarios)
     elif request.method == "POST":
-        nombre = request.form.get('nombre')
-        comentario = request.form.get('comentario')
+        data = request.get_json()
 
-        if validate_form_comment(nombre, comentario):
-            db.create_comment(nombre, comentario, activitie_id)
-        return redirect(url_for("info_activitie"))    
+        nombre = data['nombre']
+        comText = data['comText']
+        act_id = data['act_id']
+
+        if validate_form_comment(nombre, comText):
+            db.create_comment(nombre, comText, act_id)
+        #return redirect(url_for("info_activitie"))    
+        return jsonify({"status": "ok"})
 
 
 @app.route("/post-activitie", methods=["GET", "POST"])
