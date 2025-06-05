@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine, Column, Integer, BigInteger, String, ForeignKey, DateTime, Enum, TIMESTAMP
+from sqlalchemy import create_engine, Column, Integer, BigInteger, String, ForeignKey, DateTime, Enum, TIMESTAMP, func
 from sqlalchemy.orm import sessionmaker, declarative_base, relationship
 from datetime import datetime
 import enum
@@ -141,7 +141,10 @@ def get_activities(page_size, offset):
     return activities
 
 def get_total_activities():
-    return len(Actividad.__table__.columns)
+    session = SessionLocal()
+    count_act = session.query(func.count(Actividad.id)).scalar()
+    session.close()
+    return count_act
 
 def get_comuna_by_id(id):
     session = SessionLocal()
