@@ -88,19 +88,7 @@
     </div>
     <div class="main-container">
         <h1> Comentarios </h1>
-        <div class="comment-column">
-            {% if comment%}
-                {% for comm in comment %}
-                <div class="main-container-comment">
-                    <p class="small-text"><strong>comm.nombre</strong></p>
-                    <p class="small-text">comm.fecha</p>
-                    <div class="comment-container">
-                        <p class="small-text">comm.comentario</p>
-                    </div>
-                </div>
-                {% endfor%}
-            {% endif %}
-        </div>
+        <div class="comment-column" id="comments-container"></div>
     </div>
     {% endblock %}
     {% block javascript %}

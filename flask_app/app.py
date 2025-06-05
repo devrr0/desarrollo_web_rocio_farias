@@ -110,9 +110,20 @@ def info_activitie(activitie_id):
         act_id = data['act_id']
 
         if validate_form_comment(nombre, comText):
-            db.create_comment(nombre, comText, act_id)
-        #return redirect(url_for("info_activitie"))    
+            db.create_comment(nombre, comText, act_id)  
         return jsonify({"status": "ok"})
+
+@app.route("/comment/<int:activitie_id>", methods=["GET"])
+def get_comment(activitie_id):    
+    all_comments = db.get_comments(activitie_id)
+    comments = []
+    for comm in all_comments:
+        comments.append({
+            "nombre": comm.nombre,
+            "comentario": comm.texto,
+            "fecha": comm.fecha.strftime('%Y-%m-%d %H:%M')  
+        })
+    return jsonify({"status": "ok", "data": comments})
 
 
 @app.route("/post-activitie", methods=["GET", "POST"])

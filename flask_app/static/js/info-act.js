@@ -77,6 +77,7 @@ const agregarComentario = () => {
     })
     .then(data => {
         document.getElementById("problem-msg").innerText = "Comentario agregado correctamente";
+        fetchAJAX(`/comment/${act_id}`);
         myForm.reset();
     })
     .catch((error) => {
@@ -87,6 +88,51 @@ const agregarComentario = () => {
     });
 }
 
+let populateComments = (comments) => {
+    const container = document.getElementById('comments-container');
+    container.innerHTML = ''; 
+
+    comments.forEach((comm) => {
+        const div = document.createElement('div');
+        div.classList.add("main-container-comment");
+
+        div.innerHTML = `
+            <p class="small-text"><strong>${comm.nombre}</strong></p>
+            <p class="small-text">${comm.fecha}</p>
+            <div class="comment-container">
+                <p class="small-text">${comm.comentario}</p>
+            </div>
+            `;
+        container.appendChild(div);
+    });
+}
+
+let fetchAJAX = (url) => {
+  fetch(url) 
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      return response.json(); 
+    })
+    .then((ajaxResponse) => {
+      populateComments(ajaxResponse["data"]); 
+      console.log(ajaxResponse);
+    })
+    .catch((error) => {
+      console.error(
+        "There has been a problem with your fetch operation:",
+        error
+      );
+    });
+};
+
+let handleAJAX = (event) => {
+    let act_id = myForm["act_id"].value;
+    fetchAJAX(`/comment/${act_id}`);
+};
+
+document.addEventListener('DOMContentLoaded', handleAJAX)
 
 let btnInfo = document.getElementById("close-box");
 let btnForms = document.getElementById("btn-add-com")
