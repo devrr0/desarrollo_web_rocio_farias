@@ -208,6 +208,7 @@ tr.clickable:hover {
     background-position: right 10px center;
     background-size: 10px;
     color: #333;
+    font-family: "Raleway", sans-serif;
 }
 
 .form-column {
