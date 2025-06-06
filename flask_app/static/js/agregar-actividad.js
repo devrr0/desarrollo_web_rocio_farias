@@ -90,7 +90,8 @@ const validateFiles = (file, files_number) => {
     let typeValid = true;
     let fileFamily = file.type.split("/")[0];
     typeValid &&= fileFamily == "image" || file.type == "application/pdf";
-    return lengthValid; // && typeValid;
+    console.log(file.type);
+    return lengthValid; //&& typeValid;
   };
 
 
@@ -291,7 +292,7 @@ const createContactElem = () => {
     select.name = "select-contact"+cnt_contacts_n;
     select.id = "select-contact"+cnt_contacts_n;
     select.selectedIndex = 0;
-    select.style = "margin-left: 90px"
+    select.style = "margin-left: 120px"
 
     selectRow.appendChild(select);
 
@@ -304,21 +305,14 @@ const createContactElem = () => {
     input.name = "info-contact"+cnt_contacts_n;
     input.id = "info-contact"+cnt_contacts_n;
     input.value = "";
-    input.style = "margin-left: 90px"
-
+    input.style = "margin-left: 120px"
+    
     inputRow.appendChild(input);
-    wrapper.appendChild(selectRow);
+    wrapper.appendChild(selectRow)
     wrapper.appendChild(inputRow);
-
-    const lastWrapper = document.querySelector(".contact-wrapper:last-of-type");
-
-    if (lastWrapper) {
-        lastWrapper.parentNode.insertBefore(wrapper, lastWrapper.nextSibling);
-    } else {
-        const baseInput = document.getElementById("info-contact1");
-        const baseWrapper = baseInput.closest(".form-row").parentNode; 
-        baseWrapper.parentNode.insertBefore(wrapper, baseWrapper.nextSibling);
-    }
+    
+    const form = document.querySelector('form[name="myForm"]');
+    form.insertBefore(wrapper, errorMsg);
 }
 
 // Prellenar hora de termino
@@ -384,15 +378,12 @@ const createFileElem = () => {
     input.name = "file"+cnt_files_n;
     input.id = "file"+cnt_files_n;
     input.value = "";
-    input.style = "margin-left: 90px"
+    input.style = "margin-left: 120px"
 
     inputRow.appendChild(input);
     wrapper.appendChild(inputRow);
 
     const form = document.querySelector('form[name="myForm"]');
-    const baseFileInput = document.getElementById("file1");
-    const baseRow = baseFileInput.closest(".form-row");
-
     form.insertBefore(wrapper, errorMsg);
 }
 

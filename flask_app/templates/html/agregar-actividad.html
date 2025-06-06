@@ -76,20 +76,21 @@
                     </div>
 
                     <!-- Contactar por-->
-                     <div class="form-column">
-                        <div class="form-row">
-                            <label for="select-contact">Contacto</label>
-                            <select name="select-contact1" id="select-contact1">
-                                <option value="">Selecciona una forma de contacto</option>
-                            </select>
+                     <div class="contact-wrapper">
+                        <div class="form-column">
+                            <div class="form-row">
+                                <label for="select-contact">Contacto</label>
+                                <select name="select-contact1" id="select-contact1">
+                                    <option value="">Selecciona una forma de contacto</option>
+                                </select>
+                            </div>
+                            <button class="submit-btn-form" type="button" id="add-contact">Agregar Contacto </button>  
                         </div>
-                        <button class="submit-btn-form" type="button" id="add-contact">Agregar Contacto </button>
                         
-                    </div>
-                    
-                    <div class="form-row">
-                        <label for="select-contact">Info Contacto</label>
-                        <input type="text" name="info-contact1" id="info-contact1" placeholder="Id/URL de contacto" minlength="4" maxlength="50"> 
+                        <div class="form-row">
+                            <label for="select-contact">Info Contacto</label>
+                            <input type="text" name="info-contact1" id="info-contact1" placeholder="Id/URL de contacto" minlength="4" maxlength="50"> 
+                        </div>
                     </div>
                     <p id="contact-error" style="margin-left: 120px; font-weight: bold;"></p>
                     
@@ -127,12 +128,14 @@
                     </div>
 
                     <!-- Fotos-->
-                    <div class="form-column">
-                        <div class="form-row">
-                            <label for="files">Fotos</label>
-                            <input type="file" name="file1" id="file1" accept="image/png, image/jpg, image/gif, image/jpeg" class="file-input" required>
+                     <div class="file-wrapper">
+                        <div class="form-column">
+                            <div class="form-row">
+                                <label for="files">Fotos</label>
+                                <input type="file" name="file1" id="file1" accept="image/png, image/jpg, image/gif, image/jpeg" class="file-input" required>
+                            </div>
+                            <button class="submit-btn-form" type="button" id="btn-add-photo">Agregar foto </button>
                         </div>
-                        <button class="submit-btn-form" type="button" id="btn-add-photo">Agregar foto </button>
                     </div>
                     <p id="files-error" style="margin-left: 120px; font-weight: bold;"></p>
                     
