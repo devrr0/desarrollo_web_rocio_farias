@@ -224,6 +224,17 @@ def get_activities_per_day():
     session.close()
     return [{"date": str(r[0]), "count": r[1]} for r in results]
 
+def get_activities_per_theme():
+    session = SessionLocal()
+    results = (
+        session.query(ActividadTema.tema, func.count(ActividadTema.id))
+        .group_by(ActividadTema.tema)
+        .order_by(ActividadTema.tema)
+        .all()
+    )
+    session.close()
+    return [{"theme": r[0].value, "count": r[1]} for r in results]
+
 # fill tables
 
 def create_comment(nombre, texto, act_id):

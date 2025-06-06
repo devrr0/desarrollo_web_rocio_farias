@@ -8,7 +8,9 @@ Highcharts.chart('stats1', {
     xAxis: {
         type: "datetime",
         dateTimeLabelFormats: {
-        month: "%b %e, %Y",
+          day: "%e %b %Y",
+          month: "%b %Y",
+          year: "%Y"
         },
         title: {
         text: "Fecha",
@@ -26,22 +28,79 @@ Highcharts.chart('stats1', {
     }]
 });
 
+Highcharts.chart('stats2', {
+    chart: {
+        type: 'pie'
+    },
+    title: {
+        text: 'Total de Actividades por Tipo'
+    },
+    series: [{
+        name: 'Actividades',
+        colorByPoint: true,
+        data: [],
+        showInLegend: true,
+        dataLabels: {
+            enabled: true,
+            format: '{point.name}: {point.percentage:.1f} %'
+        }
+    }]
+});
+
+Highcharts.chart('stats3', {
+    chart: {
+        type: 'column'
+    },
+    title: {
+        text: 'Actividades por Mes y Hora de Inicio'
+    },
+    xAxis: {
+        title: {
+            text: 'Meses'
+        }
+    },
+    yAxis: {
+        title: {
+            text: 'Cantidad de Actividades'
+        }
+    },
+    series: [{
+        name: 'Mañana',
+        data: []
+    }, {
+        name: 'Mediodía',
+        data: []
+    }, {
+        name: 'Tarde',
+        data: []
+    }]
+});
+
+
+
 fetch("http://127.0.0.1:5000/get-stats-data")
   .then((response) => response.json())
   .then((data) => {
-    let parsedData = data.map((item) => {
+    let parsedData = data.per_day.map((item) => {
       const [year, month, day] = item.date
         .split("-")
         .map((part) => parseInt(part, 10));
       return [
         Date.UTC(year, month - 1, day), // javascript month indices start from 0 !
-        item.count,
+        item.count
       ];
     });
+    let parsedData2 = data.per_theme.map((item) => ({
+      name: item.theme, 
+      y: item.count,
+    }));
 
     // Get the chart by ID
     const chart = Highcharts.charts.find(
       (chart) => chart && chart.renderTo.id === "stats1"
+    );
+    const chart2 = Highcharts.charts.find(
+      (chart) => chart && chart.renderTo.id === "stats2"
     );
 
     // Update the chart with new data
@@ -49,6 +108,13 @@ fetch("http://127.0.0.1:5000/get-stats-data")
       series: [
         {
           data: parsedData,
+        },
+      ],
+    });
+    chart2.update({
+      series: [
+        {
+          data: parsedData2,
         },
       ],
     });

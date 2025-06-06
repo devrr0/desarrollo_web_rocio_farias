@@ -197,7 +197,8 @@ def stats():
 @cross_origin(origin="127.0.0.1", supports_credentials=True)
 def get_stats_data():    
     data = db.get_activities_per_day()
-    return  jsonify(data)
+    data2 = db.get_activities_per_theme()
+    return  jsonify({"per_day": data, "per_theme": data2})
 
 if __name__ == "__main__":
     app.run(debug=True)
