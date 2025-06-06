@@ -292,8 +292,10 @@ const createContactElem = () => {
     select.name = "select-contact"+cnt_contacts_n;
     select.id = "select-contact"+cnt_contacts_n;
     select.selectedIndex = 0;
-    select.style = "margin-left: 120px"
+    const label1 = document.createElement("label");
+    label1.for = "select-contact"+cnt_contacts_n;
 
+    selectRow.appendChild(label1);
     selectRow.appendChild(select);
 
     // fila de input
@@ -305,8 +307,10 @@ const createContactElem = () => {
     input.name = "info-contact"+cnt_contacts_n;
     input.id = "info-contact"+cnt_contacts_n;
     input.value = "";
-    input.style = "margin-left: 120px"
+    const label2 = document.createElement("label");
+    label2.for = "info-contact"+cnt_contacts_n;
     
+    inputRow.appendChild(label2)
     inputRow.appendChild(input);
     wrapper.appendChild(selectRow)
     wrapper.appendChild(inputRow);
@@ -378,8 +382,10 @@ const createFileElem = () => {
     input.name = "file"+cnt_files_n;
     input.id = "file"+cnt_files_n;
     input.value = "";
-    input.style = "margin-left: 120px"
+    const label = document.createElement("label");
+    label.for = "file"+cnt_files_n;
 
+    inputRow.appendChild(label)
     inputRow.appendChild(input);
     wrapper.appendChild(inputRow);
 
