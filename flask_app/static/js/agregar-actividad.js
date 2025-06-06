@@ -1,7 +1,4 @@
 
-const redirectIndex = () => {
-    window.location.href = "../home";
-};
 
 // Validacion Region y Comuna
 const validateSelect = (select) => {
@@ -403,10 +400,6 @@ const createFileElem = () => {
 let submitBtn = document.getElementById("btn-add-act");
 submitBtn.addEventListener("click", validateForm);
 
-// redireccionar pagina
-let btnBack = document.getElementById("btn-back");
-btnBack.addEventListener("click", redirectIndex);
-
 // agregar informacion de contacto
 let addInfoBtn = document.getElementById("add-contact");
 addInfoBtn.addEventListener("click", addContact);
@@ -420,6 +413,6 @@ let inputTema = document.getElementById("select-tema");
 inputTema.addEventListener("change", infoTema);
 
 // Agregar mas fotos
-let addPhotoBtn = document.getElementById("add-photo-btn");
+let addPhotoBtn = document.getElementById("btn-add-photo");
 addPhotoBtn.addEventListener("click", addPhoto);
 

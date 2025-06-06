@@ -70,26 +70,29 @@
                         </div>
                     
                         <div class="form-row">
-                            <label for="tel">Tel</label>
+                            <label for="tel">Teléfono</label>
                             <input type="tel" name="tel" id="tel" placeholder="+569XXXXXXXX" minlength="12" maxlength="12">
                         </div>
                     </div>
 
                     <!-- Contactar por-->
-                     <div>
+                     <div class="form-column">
                         <div class="form-row">
-                            <label for="select-contact">Conta- <br>cto</label>
+                            <label for="select-contact">Contacto</label>
                             <select name="select-contact1" id="select-contact1">
                                 <option value="">Selecciona una forma de contacto</option>
                             </select>
-                            <button class="submit-btn-form" type="button" id="add-contact">Agregar Contacto </button>
                         </div>
-
-                        <div class="form-row">
-                            <input type="text" name="info-contact1" id="info-contact1" placeholder="Id/URL de contacto" minlength="4" maxlength="50" style="margin-left: 90px"> 
-                        </div>
+                        <button class="submit-btn-form" type="button" id="add-contact">Agregar Contacto </button>
+                        
                     </div>
-                    <p id="contact-error" style="margin-left: 90px; font-weight: bold;"></p>
+                    
+                    <div class="form-row">
+                        <label for="select-contact">Info Contacto</label>
+                        <input type="text" name="info-contact1" id="info-contact1" placeholder="Id/URL de contacto" minlength="4" maxlength="50"> 
+                    </div>
+                    <p id="contact-error" style="margin-left: 120px; font-weight: bold;"></p>
+                    
 
                     <p class="small-text"><strong>¿Cuándo y de que trata?</strong></p>
 
@@ -108,7 +111,7 @@
 
                     <!-- Descripcion-->
                     <div class="form-row">
-                        <label for="descripcion">Descrip- <br>ción</label>
+                        <label for="descripcion">Descripción</label>
                         <textarea name="descripcion" id="descripcion" cols="50" rows="10"></textarea>
                     </div>
 
@@ -124,12 +127,14 @@
                     </div>
 
                     <!-- Fotos-->
-                    <div class="form-row">
-                        <label for="files">Fotos</label>
-                        <input type="file" name="file1" id="file1" accept="image/png, image/jpg, image/gif, image/jpeg" class="file-input" required>
-                        <button class="submit-btn-form" type="button" id="add-photo-btn">Agregar foto </button>
+                    <div class="form-column">
+                        <div class="form-row">
+                            <label for="files">Fotos</label>
+                            <input type="file" name="file1" id="file1" accept="image/png, image/jpg, image/gif, image/jpeg" class="file-input" required>
+                        </div>
+                        <button class="submit-btn-form" type="button" id="btn-add-photo">Agregar foto </button>
                     </div>
-                    <p id="files-error" style="margin-left: 90px; font-weight: bold;"></p>
+                    <p id="files-error" style="margin-left: 120px; font-weight: bold;"></p>
                     
                 </form>
             </div>

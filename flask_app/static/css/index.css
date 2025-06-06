@@ -178,19 +178,31 @@ tr.clickable:hover {
     background-color: var(--gray-color);
     border-radius: 10px;
     margin: 20px auto 30px; 
-    width: 75%;
+    width: 85%;
 
 }
  
 .form-row {
     width: 100%;
-    display: flex;   
+    display: grid;
+    grid-template-columns: 110px 1fr; 
+    align-items: center;
+    gap: 10px;
 }
 
-.form-row label{
+.form-column {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px; 
+}
+
+.form-row label {
     width: 60px;   
     margin-right: 30px;
+    margin-bottom: 10px;
     font-size: 20px;
+    min-width: 0; 
+    padding-right: 10px; 
 }
 
 .form-row input,
@@ -198,7 +210,7 @@ tr.clickable:hover {
 .form-row textarea {
     width: 100%;
     padding: 8px;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
     border: 1px solid #ccc;
     border-radius: 10px; 
     font-size: 16px;
@@ -209,12 +221,6 @@ tr.clickable:hover {
     background-size: 10px;
     color: #333;
     font-family: "Raleway", sans-serif;
-}
-
-.form-column {
-    display: flex;
-    justify-content: space-between;
-    gap: 10px; 
 }
 
 .form-option input{
