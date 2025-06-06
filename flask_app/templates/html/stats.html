@@ -19,25 +19,21 @@
         {% block content %}
         <div class="main-container">
             <h1> Estadísticas</h1>
-            <p class="small-text">A continuación se observan distintas estadísticas construidas <br>con los datos obtenidos de la aplicación web</p>
+            <p class="small-text">A continuación se observan distintas estadísticas construidas con los datos obtenidos de la aplicación web</p>
+            <div class="main-container-stats">
+                <h2>Actividades por día</h2>
+                <div class="stats-container" id="stats1"></div>
 
-            <h2>Actividades por día</h2>
-            <div class="stats-container">
-                <img src="{{ url_for('static', filename='img/actividades_por_dia.png') }}" alt="Actividades por día" >
-            </div>
+                <h2>Actividades por tipo</h2>
+                <div class="stats-container" id="stats2"></div>
 
-            <h2>Actividades por tipo</h2>
-            <div class="stats-container">
-                <img src="{{ url_for('static', filename='img/actividades_por_tipo.png') }}" alt="Actividades por tipo" >
-            </div>
-
-            <h2>Actividades por hora</h2>
-            <div class="stats-container">
-                <img src="{{ url_for('static', filename='img/actividades_por_mes.png') }}" alt="Actividades por hora" >
+                <h2>Actividades por hora</h2>
+                <div class="stats-container" id="stats3"></div>
             </div>
         </div>
         {% endblock %}
         {% block javascript %}
+            <script src="https://code.highcharts.com/highcharts.js"></script>
             <script lang="javascript" src="{{ url_for('static', filename='js/stats.js') }}"></script>
         {% endblock %}
     </body>

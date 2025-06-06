@@ -1,4 +1,5 @@
 from flask import Flask, request, render_template, redirect, url_for, session, jsonify
+from flask_cors import cross_origin
 from utils.validations import validate_form, validate_form_comment
 from database import db
 from werkzeug.utils import secure_filename
@@ -191,6 +192,12 @@ def post_activitie():
 @app.route("/stats", methods=["GET"])
 def stats():
     return render_template("html/stats.html")
+
+@app.route("/get-stats-data", methods=["GET"])
+@cross_origin(origin="127.0.0.1", supports_credentials=True)
+def get_stats_data():    
+    data = db.get_activities_per_day()
+    return  jsonify(data)
 
 if __name__ == "__main__":
     app.run(debug=True)

@@ -213,6 +213,17 @@ def get_comments(act_id):
     session.close()
     return comments
 
+def get_activities_per_day():
+    session = SessionLocal()
+    results = (
+        session.query(func.date(Actividad.dia_hora_inicio).label("dia"), func.count(Actividad.id))
+        .group_by(func.date(Actividad.dia_hora_inicio))
+        .order_by(func.date(Actividad.dia_hora_inicio))
+        .all()
+    )
+    session.close()
+    return [{"date": str(r[0]), "count": r[1]} for r in results]
+
 # fill tables
 
 def create_comment(nombre, texto, act_id):
