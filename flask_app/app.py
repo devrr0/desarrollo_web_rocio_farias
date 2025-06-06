@@ -8,13 +8,13 @@ import os
 import uuid
 from datetime import datetime
 
-UPLOAD_FOLDER = 'static/uploads'
+UPLOAD_FOLDER = 'img/upload'
 
 app = Flask(__name__)
 app.secret_key = "supersecretkey"
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://cc5002:programacionweb@localhost:3306/tarea2'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['UPLOAD_FOLDER'] = os.path.join('static', 'img') 
+app.config['UPLOAD_FOLDER'] = os.path.join('static', 'img/upload') 
 
 # --- Auth routes ---
 
@@ -99,7 +99,7 @@ def info_activitie(activitie_id):
             })
 
         fotos = db.get_fotos(act.id)
-        data_img = [f'static/{f.ruta_archivo}/{f.nombre_archivo}' for f in fotos] 
+        data_img = [f'{f.ruta_archivo}/{f.nombre_archivo}' for f in fotos] 
 
         return render_template("html/info-act.html", act=data, fotos=fotos, comment=comentarios)
     elif request.method == "POST":
@@ -170,7 +170,7 @@ def post_activitie():
                 img_filename = f"{_filename}_{str(uuid.uuid4())}.{_extension}"
 
                 f.save(os.path.join(app.config["UPLOAD_FOLDER"], img_filename))
-                imgs.append((img_filename,'img'))
+                imgs.append((img_filename, UPLOAD_FOLDER))
 
             # agregar actividad
             act_id = db.create_activitie(comuna, sector, nombre, email, tel, inicio, termino, descripcion)

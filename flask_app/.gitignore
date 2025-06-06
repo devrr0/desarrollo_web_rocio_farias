@@ -1,3 +1,5 @@
 venv/
 __pycache__/
-static/imgs
+static/img/upload
+database/__pycache__
+utils/__pycache__
