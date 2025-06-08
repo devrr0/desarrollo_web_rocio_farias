@@ -36,7 +36,7 @@ def recent_activities():
             "termino" : act.dia_hora_termino,
             "comuna" : comuna.nombre,
             "sector" : act.sector,
-            "tema" : tema.glosa_otro if tema.glosa_otro else tema.tema.value,      
+            "tema" : tema.glosa_otro.capitalize()  if tema.glosa_otro else tema.tema.value.capitalize() ,      
             "img" : url_for('static', filename=path_img)
         })    
 
@@ -64,7 +64,7 @@ def all_activities():
             "termino" : act.dia_hora_termino,
             "comuna" : comuna.nombre,
             "sector" : act.sector,
-            "tema" : tema.glosa_otro if tema.glosa_otro else tema.tema.value,
+            "tema" : tema.glosa_otro.capitalize()  if tema.glosa_otro else tema.tema.value.capitalize(),
             "organizador" :  act.nombre,      
             "img" : url_for('static', filename=path_img),
             "id" : act.id
@@ -87,7 +87,7 @@ def info_activitie(activitie_id):
             "organizador" : act.nombre,
             "inicio" : act.dia_hora_inicio,
             "termino" : act.dia_hora_termino,
-            "tema" : tema.glosa_otro if tema.glosa_otro else tema.tema.value,
+            "tema" : tema.glosa_otro.capitalize()  if tema.glosa_otro else tema.tema.value.capitalize(),
         }
 
         comments = db.get_comments(act.id)
