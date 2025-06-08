@@ -198,7 +198,8 @@ def stats():
 def get_stats_data():    
     data = db.get_activities_per_day()
     data2 = db.get_activities_per_theme()
-    return  jsonify({"per_day": data, "per_theme": data2})
+    data3 = db.get_activitie_per_time()
+    return  jsonify({"per_day": data, "per_theme": data2, "per_time": data3})
 
 if __name__ == "__main__":
     app.run(debug=True)

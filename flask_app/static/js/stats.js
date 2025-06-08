@@ -47,36 +47,6 @@ Highcharts.chart('stats2', {
     }]
 });
 
-Highcharts.chart('stats3', {
-    chart: {
-        type: 'column'
-    },
-    title: {
-        text: 'Actividades por Mes y Hora de Inicio'
-    },
-    xAxis: {
-        title: {
-            text: 'Meses'
-        }
-    },
-    yAxis: {
-        title: {
-            text: 'Cantidad de Actividades'
-        }
-    },
-    series: [{
-        name: 'Mañana',
-        data: []
-    }, {
-        name: 'Mediodía',
-        data: []
-    }, {
-        name: 'Tarde',
-        data: []
-    }]
-});
-
-
 
 fetch("http://127.0.0.1:5000/get-stats-data")
   .then((response) => response.json())
@@ -118,5 +88,23 @@ fetch("http://127.0.0.1:5000/get-stats-data")
         },
       ],
     });
+    Highcharts.chart('stats3', {
+    chart: {
+        type: 'column'
+    },
+    title: {
+        text: 'Actividades Iniciadas por Mes'
+    },
+    xAxis: {
+        categories: data.per_time.xAxis
+    },
+    yAxis: {
+        title: {
+            text: 'Cantidad de Actividades'
+        }
+    },
+    series: data.per_time.series
+});
+
   })
   .catch((error) => console.error("Error:", error));

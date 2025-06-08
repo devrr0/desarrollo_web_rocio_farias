@@ -1,9 +1,10 @@
-from sqlalchemy import create_engine, Column, Integer, BigInteger, String, ForeignKey, DateTime, Enum, TIMESTAMP, func
+from sqlalchemy import create_engine, Column, Integer, BigInteger, String, ForeignKey, DateTime, Enum, TIMESTAMP, func, extract, case
 from sqlalchemy.orm import sessionmaker, declarative_base, relationship
 from datetime import datetime
 import enum
 import json
 import unicodedata
+import calendar
 
 DB_NAME = 'tarea2'
 DB_USERNAME = 'cc5002'
@@ -235,6 +236,58 @@ def get_activities_per_theme():
     session.close()
     return [{"theme": r[0].value, "count": r[1]} for r in results]
 
+def get_activitie_per_time():
+    session = SessionLocal()
+    horario = case(
+        (extract('hour', Actividad.dia_hora_inicio).between(7, 11), 'Mañana'),
+        (extract('hour', Actividad.dia_hora_inicio).between(12, 15), 'Mediodia'),
+        (extract('hour', Actividad.dia_hora_inicio).between(16, 21), 'Tarde'))
+
+    results = (
+        session.query(
+            extract('year', Actividad.dia_hora_inicio).label('anio'),
+            extract('month', Actividad.dia_hora_inicio).label('mes'),
+            horario.label('horario'),
+            func.count(Actividad.id).label('cantidad'))
+        .group_by('anio', 'mes', 'horario')
+        .order_by('anio', 'mes')
+        .all()
+    )
+    session.close()
+    
+    meses = []
+    datos = {}
+    for i in results:
+        year = int(i.anio)
+        month = int(i.mes)
+        horario = i.horario
+        cantidad = i.cantidad
+        label = f"{calendar.month_abbr[month]} {year}"
+        if label not in meses:
+            meses.append(label)
+        if label not in datos:
+            datos[label] = {'Mañana': 0, 'Mediodia': 0, 'Tarde': 0}
+        if horario in ['Mañana', 'Mediodia', 'Tarde']:
+            datos[label][horario] = cantidad
+
+    data_manana = []
+    data_mediodia = []
+    data_tarde = []
+
+    for i in meses:
+        data_manana.append(datos[i]['Mañana'])
+        data_mediodia.append(datos[i]['Mediodia'])
+        data_tarde.append(datos[i]['Tarde'])
+
+    data = {
+        "xAxis": meses,
+        "series": [
+            {"name": "Mañana", "data": data_manana},
+            {"name": "Mediodia", "data": data_mediodia},
+            {"name": "Tarde", "data": data_tarde}
+        ]
+    }
+    return data
 # fill tables
 
 def create_comment(nombre, texto, act_id):
