@@ -23,7 +23,7 @@ app.config['UPLOAD_FOLDER'] = os.path.join('static', 'img/upload')
 def recent_activities():
     PAGE_SIZE = 5
     data = []
-    for act in db.get_activities(page_size=PAGE_SIZE, offset=0):      
+    for act in db.get_last_activities(page_size=PAGE_SIZE):      
         act_id = act.id
 
         comuna = db.get_comuna_by_id(act.comuna_id)         

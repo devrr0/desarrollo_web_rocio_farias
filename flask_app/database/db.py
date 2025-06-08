@@ -141,6 +141,12 @@ def get_activities(page_size, offset):
     session.close()
     return activities
 
+def get_last_activities(page_size):
+    session = SessionLocal()
+    activities = session.query(Actividad).order_by(Actividad.id.desc()).limit(page_size).all()
+    session.close()
+    return activities
+
 def get_total_activities():
     session = SessionLocal()
     count_act = session.query(func.count(Actividad.id)).scalar()
