@@ -85,15 +85,18 @@ const validateTema = (tema, info) => {
 };
 
 // Validacion Fotos
-const validateFiles = (file, files_number) => {
-    if (!file) return false;
-    let lengthValid = 1 <= files_number && files_number <= 5;
-    let typeValid = true;
-    let fileFamily = file.type.split("/")[0];
-    typeValid &&= fileFamily == "image" || file.type == "application/pdf";
-    console.log(file.type);
-    return lengthValid; //&& typeValid;
-  };
+const validateFiles = (file_input, cnt_files) => {
+  if (!file_input|| !file_input.files) return false;
+
+  let files = file_input.files;
+  let filesCount = files.length;
+
+  let lengthValid = filesCount > 0 && cnt_files <= 5;
+  let allowedTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
+  let typeValid = Array.from(files).every(file => allowedTypes.includes(file.type));
+
+  return lengthValid && typeValid;
+};
 
 
 // Validacion Formulario  
