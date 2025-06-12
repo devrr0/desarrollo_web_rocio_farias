@@ -35,6 +35,7 @@ const validateEmail = (email) => {
 
 // Validacion Telefono
 const validatePhoneNumber = (phoneNumber) => {
+    if(!phoneNumber) return true;
     let lengthValid = phoneNumber.length == 12;
   
     // validación de formato

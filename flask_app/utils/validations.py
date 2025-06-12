@@ -24,7 +24,7 @@ def validate_email(value):
 
 def validate_phone(value):
     if not value:
-        return False
+        return True
     if not (len(value) == 12):
         return False
     expr = r'^\+569\d{8}$'
