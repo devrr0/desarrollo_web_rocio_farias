@@ -79,7 +79,7 @@
                      <div class="contact-wrapper">
                         <div class="form-column">
                             <div class="form-row">
-                                <label for="select-contact">Contacto</label>
+                                <label for="select-contact1">Contacto</label>
                                 <select name="select-contact1" id="select-contact1">
                                     <option value="">Selecciona una forma de contacto</option>
                                 </select>
@@ -88,7 +88,7 @@
                         </div>
                         
                         <div class="form-row">
-                            <label for="select-contact">Info Contacto</label>
+                            <label for="info-contact1">Info Contacto</label>
                             <input type="text" name="info-contact1" id="info-contact1" placeholder="Id/URL de contacto" minlength="4" maxlength="50"> 
                         </div>
                     </div>
@@ -131,7 +131,7 @@
                      <div class="file-wrapper">
                         <div class="form-column">
                             <div class="form-row">
-                                <label for="files">Fotos</label>
+                                <label for="file1">Fotos</label>
                                 <input type="file" name="file1" id="file1" accept="image/png, image/jpg, image/gif, image/jpeg" class="file-input" required>
                             </div>
                             <button class="submit-btn-form" type="button" id="btn-add-photo">Agregar foto </button>
@@ -146,8 +146,8 @@
         </div>
         
         {% block javascript %}
-            <script lang="javascript" src="{{ url_for('static', filename='js/agregar-actividad.js') }}"></script>
-            <script lang="javascript" src="{{ url_for('static', filename='js/select.js') }}"></script>
+            <script src="{{ url_for('static', filename='js/agregar-actividad.js') }}"></script>
+            <script src="{{ url_for('static', filename='js/select.js') }}"></script>
         {% endblock %}
     </body>
 </html>    
