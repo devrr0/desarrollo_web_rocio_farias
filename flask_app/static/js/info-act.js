@@ -96,13 +96,30 @@ let populateComments = (comments) => {
         const div = document.createElement('div');
         div.classList.add("main-container-comment");
 
-        div.innerHTML = `
-            <p class="small-text"><strong>${comm.nombre}</strong></p>
-            <p class="small-text">${comm.fecha}</p>
-            <div class="comment-container">
-                <p class="small-text">${comm.comentario}</p>
-            </div>
-            `;
+        // Nombre
+        const pNombre = document.createElement("p");
+        pNombre.classList.add("small-text");
+        const strong = document.createElement("strong");
+        strong.textContent = comm.nombre;  
+        pNombre.appendChild(strong);
+
+        // Fecha
+        const pFecha = document.createElement("p");
+        pFecha.classList.add("small-text");
+        pFecha.textContent = comm.fecha; 
+
+        // Comentario
+        const commentDiv = document.createElement("div");
+        commentDiv.classList.add("comment-container");
+        const pComentario = document.createElement("p");
+        pComentario.classList.add("small-text");
+        pComentario.textContent = comm.comentario; 
+        commentDiv.appendChild(pComentario);
+
+        div.appendChild(pNombre);
+        div.appendChild(pFecha);
+        div.appendChild(commentDiv);
+
         container.appendChild(div);
     });
 }
