@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="utf-8">
+        <title>Agregar Actividad - Actividades recreativas</title>
+        {% block css %}
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Raleway:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+        {% endblock %}
+    </head>
+    <body>
+        <div class="navbar">
+            <img id="logo-id" src="{{ url_for('static', filename='img/calendar_logo.png') }}" alt="Logo">
+            <h1>Página de eventos</h1>
+            <a class="navbar-page" href="{{ url_for('recent_activities') }}">Inicio</a>
+        </div>
+        <div class="main-container">
+            <h1> Agregar un actividad</h1>
+            <div class="form-container">
+                <div id="val-box" style="text-align: center;">
+                    <p class="small-text" id="val-msg"></p>
+                    <ul id="val-list"></ul>
+                </div>
+
+                <div id="submit-box" style="align-content: center;">
+                    <p class="small-text" id="submit-msg"></p>
+                </div>
+
+                <form name="myForm" method="post" action="{{url_for('post_activitie')}}" enctype="multipart/form-data">
+                    <p class="small-text"><strong>¿Dónde se realiza la actividad?</strong></p>
+                
+                    <!-- Region y Comuna-->
+                    <div class="form-column">
+                        <div class="form-row">
+                            <label for="select-region">Región</label>
+                            <select name="select-region" id="select-region" required>
+                                <option value="">Seleccione una región</option>
+                            </select>
+                        </div>
+                    
+                        <div class="form-row">
+                            <label for="select-comuna">Comuna</label>
+                            <select name="select-comuna" id="select-comuna" required>
+                                <option value="">Seleccione una comuna</option>
+                            </select>
+                        </div>
+                    </div>
+                
+                    <!-- Sector-->
+                    <div class="form-row">
+                        <label for="sector">Sector</label>
+                        <input type="text" name="sector" id="sector" maxlength="100">
+                    </div>
+                
+                    <p class="small-text"><strong>¿Quién organiza la actividad?</strong></p>
+
+                    <!-- Nombre-->
+                    <div class="form-row">
+                        <label for="nombre">Nombre</label>
+                        <input type="text" name="nombre" id="nombre" minlength="4" maxlength="200" required>
+                    </div>
+
+                    <!-- Email y Telefono-->
+                    <div class="form-column">
+                        <div class="form-row">
+                            <label for="email">Email</label>
+                            <input type="email" name="email" id="email" minlength="10" maxlength="100" required>
+                        </div>
+                    
+                        <div class="form-row">
+                            <label for="tel">Teléfono</label>
+                            <input type="tel" name="tel" id="tel" placeholder="+569XXXXXXXX" minlength="12" maxlength="12">
+                        </div>
+                    </div>
+
+                    <!-- Contactar por-->
+                     <div class="contact-wrapper">
+                        <div class="form-column">
+                            <div class="form-row">
+                                <label for="select-contact1">Contacto</label>
+                                <select name="select-contact1" id="select-contact1">
+                                    <option value="">Selecciona una forma de contacto</option>
+                                </select>
+                            </div>
+                            <button class="submit-btn-form" type="button" id="add-contact">Agregar Contacto </button>  
+                        </div>
+                        
+                        <div class="form-row">
+                            <label for="info-contact1">Info Contacto</label>
+                            <input type="text" name="info-contact1" id="info-contact1" placeholder="Id/URL de contacto" minlength="4" maxlength="50"> 
+                        </div>
+                    </div>
+                    <p id="contact-error" style="margin-left: 120px; font-weight: bold;"></p>
+                    
+
+                    <p class="small-text"><strong>¿Cuándo y de que trata?</strong></p>
+
+                    <!-- Inicio y Termino-->
+                    <div class="form-column">
+                        <div class="form-row">
+                            <label for="inicio">Inicio</label>
+                            <input type="datetime-local" name="inicio" id="inicio" min="2025-04-07T00:00" required>
+                        </div>
+                    
+                        <div class="form-row">
+                            <label for="termino">Término</label>
+                            <input type="datetime-local" name="termino" id="termino" min="2025-04-07T00:00">
+                        </div>
+                    </div>
+
+                    <!-- Descripcion-->
+                    <div class="form-row">
+                        <label for="descripcion">Descripción</label>
+                        <textarea name="descripcion" id="descripcion" cols="50" rows="10"></textarea>
+                    </div>
+
+                    <!-- Tema-->
+                    <div class="form-row">
+                        <label for="select-tema">Tema</label>
+                        <select name="select-tema" id="select-tema" required>
+                            <option value="">Selecciona un tema</option>
+                        </select>
+                    </div>
+                    <div class="form-row">
+                        <label for="info-tema"></label>
+                        <input type="text" name="info-tema" id="info-tema" placeholder="Descripción del tema" minlength="2" maxlength="15" style="display: none;">
+                    </div>
+                    <!-- Fotos-->
+                     <div class="file-wrapper">
+                        <div class="form-column">
+                            <div class="form-row">
+                                <label for="file1">Fotos</label>
+                                <input type="file" name="file1" id="file1" accept="image/png, image/jpg, image/gif, image/jpeg" class="file-input" required>
+                            </div>
+                            <button class="submit-btn-form" type="button" id="btn-add-photo">Agregar foto </button>
+                        </div>
+                    </div>
+                    <p id="files-error" style="margin-left: 120px; font-weight: bold;"></p>
+                    
+                </form>
+            </div>
+            <button type="button" class="submit-btn" id="btn-add-act">Agregar esta actividad</button>
+            <p class="small-text" id="problem-msg"></p>
+        </div>
+        
+        {% block javascript %}
+            <script src="{{ url_for('static', filename='js/agregar-actividad.js') }}"></script>
+            <script src="{{ url_for('static', filename='js/select.js') }}"></script>
+        {% endblock %}
+    </body>
+</html>    

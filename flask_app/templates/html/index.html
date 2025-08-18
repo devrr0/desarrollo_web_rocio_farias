@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="utf-8">
+        <title> Portada - Actividades recreativas</title>
+        {% block css %}
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Raleway:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+        {% endblock %}
+    </head>
+
+    <body>
+        <!-- Contenedor principal -->
+         <div class="main-container-index">
+            <h1> ¡Bienvenido!</h1> 
+            <p class="small-text"> La siguiente aplicación permite encontrar actividades recreativas en sectores cercanos a tu comunidad </p>
+            <h2> Comencemos </h2>
+            <p class="small-text"> Selecciona una funcionalidad</p>
+
+            <div class="button-container">
+                <button type="button" class="submit-btn" id="btn-add">Agregar actividad</button>
+                <button type="button" class="submit-btn" id="btn-list">Ver listado de actividades</button>
+                <button type="button" class="submit-btn" id="btn-stats">Estadísticas</button>
+             </div>
+
+         </div>
+
+         {% block content %}
+         <!-- Tabla -->
+         <div class="table-container">
+            <p class="small-text">Actividades recientemente agregadas</p>
+            <table>
+                <!-- Encabezado -->
+                <tr>
+                    <th>Inicio</th>
+                    <th>Término</th>
+                    <th>Comuna</th>
+                    <th>Sector</th>
+                    <th>Tema</th>
+                    <th>Foto</th>
+                </tr>
+                <!-- Contenido -->
+                 {% if data %}
+                    {% for act in data%}
+                    <tr>
+                        <td>{{ act.inicio }}</td>
+                        <td>{{ act.termino }}</td>
+                        <td>{{ act.comuna }}</td>
+                        <td>{{ act.sector }}</td>
+                        <td>{{ act.tema }}</td>
+                        <td> <img src="{{ act.img }}" alt="Foto actividad" width="320" height="240"> </td>
+                    </tr>
+                    {% endfor%}
+                {% endif %}
+            </table>
+         </div>
+         {% endblock %}
+         {% block javascript %}
+            <script src="{{ url_for('static', filename='js/index.js') }}"></script>
+         {% endblock %}
+    </body>
+    
+</html>

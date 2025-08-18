@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="utf-8">
+        <title> Listado de Actividades - Actividades recreativas </title>
+        {% block css %}
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Raleway:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+        {% endblock %}
+    </head>
+    <body>
+        <div class="navbar">
+            <img id="logo-id" src="{{ url_for('static', filename='img/calendar_logo.png') }}" alt="Logo">
+            <h1>Página de eventos</h1>
+            <a class="navbar-page" href="{{ url_for('recent_activities') }}">Inicio</a>
+        </div>
+        <div class="main-container">
+            <h1> Listado de Actividades</h1>
+        </div>
+
+        <div style="margin-bottom: 10px;">
+            {% if page > 1 %}
+                <a href="{{ url_for('all_activities', page=page-1) }}" class="submit-btn-list">Anterior</a>
+            {% endif %}
+            <span>Página {{ page }} de {{ total_pages }}</span>
+            {% if total_pages > page %}
+                <a href="{{ url_for('all_activities', page=page+1) }}" class="submit-btn-list">Siguiente</a>
+            {% endif %}
+        </div>
+
+        <!-- Tabla -->
+        {% block content %}
+        <div class="table-container">
+            <table>
+                <!-- Encabezado -->
+                <tr>
+                    <th>Inicio</th>
+                    <th>Término</th>
+                    <th>Comuna</th>
+                    <th>Sector</th>
+                    <th>Tema</th>
+                    <th>Nombre Organizador</th>
+                    <th>Foto</th>
+                </tr>
+                <!-- Contenido -->
+                 {% if data %}
+                    {% for act in data %}
+                    <tr class="clickable" onclick="location.href='/activitie/{{ act.id }}'">
+                        <td>{{ act.inicio }}</td>
+                        <td>{{ act.termino }}</td>
+                        <td>{{ act.comuna }}</td>
+                        <td>{{ act.sector }}</td>
+                        <td>{{ act.tema }}</td>
+                        <td>{{ act.organizador }}</td>
+                        <td> <img src="{{ act.img }}" alt="Foto actividad" width="240" height="160"> </td>
+                    </tr>
+                    {% endfor%}
+                {% endif %}
+            </table>
+         </div>
+         {% endblock %}
+    </body>
+
+</html>

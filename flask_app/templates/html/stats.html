@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="utf-8">
+        <title> Estadísticas - Actividades recreativas </title>
+        {% block css %}
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Raleway:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+        {% endblock %}
+    </head>
+    <body>
+        <div class="navbar">
+            <img id="logo-id" src="{{ url_for('static', filename='img/calendar_logo.png') }}" alt="Logo">
+            <h1>Página de eventos</h1>
+            <a class="navbar-page" href="{{ url_for('recent_activities') }}">Inicio</a>
+        </div>
+        {% block content %}
+        <div class="main-container">
+            <h1> Estadísticas</h1>
+            <p class="small-text">A continuación se observan distintas estadísticas construidas con los datos obtenidos de la aplicación web</p>
+            <div class="main-container-stats">
+                <h2>Actividades por día</h2>
+                <div class="stats-container" id="stats1"></div>
+
+                <h2>Actividades por tipo</h2>
+                <div class="stats-container" id="stats2"></div>
+
+                <h2>Actividades por hora</h2>
+                <div class="stats-container" id="stats3"></div>
+            </div>
+        </div>
+        {% endblock %}
+        {% block javascript %}
+            <script src="https://code.highcharts.com/highcharts.js"></script>
+            <script src="{{ url_for('static', filename='js/stats.js') }}"></script>
+        {% endblock %}
+    </body>
+
+</html>    

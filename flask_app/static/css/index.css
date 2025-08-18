@@ -1,0 +1,358 @@
+:root {
+    --black-color: #000022;
+    --background-color: #d7d3e771;
+    --purple-color: #e4abf8;
+    --purple-hover-color: #c19dce;
+    --gray-color:  #87868871;
+    --gray-hover-color: #e1bfee;
+}
+
+body {
+    background-color: var(--background-color);
+    width: 95%; 
+    margin: 20px auto; 
+    font-family: "Raleway", sans-serif;
+}
+
+/* CONTAINER */
+.main-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    align-items: center; 
+    margin: 0;
+}
+
+.main-container-index {
+    background-color: var(--gray-color);
+    padding: 20px;
+    border-radius: 1.2em;
+    border: .2em solid var(--purple-color);
+    box-shadow: .3em .3em 0px 0px var(--purple-color);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    align-items: center; 
+    margin: 0;
+}
+
+/* NAVBAR */
+.navbar {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-end;
+  align-items: center;
+  background: var(--gray-color);
+  border: .2em solid var(--purple-color);
+  border-radius: 1.2em;
+  margin: 1em 1em 2em 1em;
+  box-shadow: .3em .3em 0px 0px var(--purple-color);
+}
+
+.navbar > * {
+  color: var(--black-color);
+}
+
+#logo-id {
+  margin: 0 auto;
+  width: 4%;
+  padding: .5em;
+  margin: .1em .1em .1em 1.5em;
+}
+
+.navbar h1 {
+  font-size: 2rem;
+  margin: .5em;
+  margin-right: auto;
+}
+
+.navbar a {
+  position: relative;
+  text-decoration: none;
+  margin: 0 2em;
+  padding: .25em;
+  font-weight: 600;
+  font-size: 1.5rem;
+}
+
+.navbar-page::after{
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 0.175em;
+  background: var(--black-color);
+  left: 0;
+  bottom: 0;
+  transform: scale(0, 1);
+  transition: transform 0.3s ease;
+}
+
+
+.navbar-page:hover::after {
+  transform: scale(1, 1);
+}
+
+
+/* BUTTON */
+.button-container {
+    display: flex;
+    justify-content: center; 
+    gap: 15px; 
+}
+
+.submit-btn {
+    background-color: var(--purple-color);
+    text-align: center;
+    padding: 1.2em;
+    border: .2em solid var(--black-color);
+    border-radius: 1.2em;
+    font-weight: 600;
+    font-size: 1.2rem; 
+    font-family: "Raleway", sans-serif;
+}
+
+.submit-btn:hover {
+    background-color: var(--purple-hover-color);
+    transition: 0.2s ease;
+}
+
+/* TABLE */
+
+.table-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: left; 
+    text-align: left;
+    margin: 20px auto 30px;
+    padding: 5px 20px 5px 20px;
+    font-size: 1.2rem; 
+}
+
+.table-container > * {
+    font-family: "Raleway", sans-serif;
+}
+
+table {
+    border: 2px solid black;
+    border-radius: 10px;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: 1.2rem
+}
+
+th, td {
+    border: 2px solid black; 
+    padding: 10px; 
+}
+
+th{
+    background-color: var(--gray-color);
+}
+
+
+tr.clickable:hover {
+    background-color: var(--gray-hover-color);
+    transition: 0.2s ease;
+}
+
+/* STATS */
+
+.main-container-stats{
+    display: flex;
+    justify-content: left;
+    flex-direction: column;
+    text-align: left;
+    width: 85%;
+}
+
+.stats-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: var(--gray-color);
+    border-radius: 10px;
+    margin: 20px auto 30px; 
+    padding: 5px 20px 5px 20px;
+    width: 100%;  
+    height: 600px; 
+}
+
+/* FORMS */
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    text-align: left;
+    padding: 5px 20px 5px 20px;
+    background-color: var(--gray-color);
+    border-radius: 10px;
+    margin: 20px auto 30px; 
+    width: 85%;
+
+}
+ 
+.form-row {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 110px 1fr; 
+    align-items: center;
+    gap: 10px;
+}
+
+.form-column {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px; 
+}
+
+.form-row label {
+    width: 60px;   
+    margin-right: 30px;
+    margin-bottom: 10px;
+    font-size: 20px;
+    min-width: 0; 
+    padding-right: 10px; 
+}
+
+.form-row input,
+.form-row select,
+.form-row textarea {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 10px; 
+    font-size: 16px;
+    box-sizing: border-box;
+    background-color: #fff;
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 10px;
+    color: #333;
+    font-family: "Raleway", sans-serif;
+}
+
+.form-option input{
+    width: 60%;
+    padding: 8px;
+    margin-left: 90px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 10px; 
+    font-size: 16px;
+    box-sizing: border-box;
+    background-color: #fff;
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 10px;
+    color: #333;
+}
+
+.submit-btn-form{
+    margin-left: 10px;
+    border-radius: 10px;
+    border: .1em solid var(--black-color);
+    width: 12%;
+    height: 40px;
+}
+
+.submit-btn-list{
+    margin-left: 10px;
+    border-radius: 1.2em;
+    padding: 0.4em;
+    border: .1em solid var(--black-color);
+    background-color:var(--gray-hover-color);
+}
+
+.image-box {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 999;
+    background-color:var(--gray-color);
+    padding: 10px;
+    border-radius: 12px;
+}
+
+.image-wrapper {
+    display: inline-block;
+    margin: 10px;
+    text-align: center;
+}
+
+/* COMMENT */
+
+.post-comment-container {
+    display: flex;
+    justify-content: left;
+    flex-direction: column;
+    text-align: left;
+    padding: 5px 20px 5px 20px;
+    background-color: var(--gray-color);
+    border-radius: 10px;
+    margin: 20px auto 30px; 
+    width: 95%;
+}
+
+.main-container-comment {
+    display: flex;
+    justify-content: left;
+    flex-direction: column;
+    text-align: left;
+    background-color: var(--gray-color);
+    border-radius: 10px;
+    padding: 0px 20px 10px 20px;
+}
+
+.main-container-comment > *:not(:last-child) {
+    margin-bottom: 5px;
+}
+
+.main-container-comment > *:not(:first-child) {
+    margin-top: 5px;
+}
+
+.comment-container {
+    flex-direction: column;
+    background-color: white;
+    border-radius: 10px;
+    border: .2em solid var(--black-color);
+    padding: 0px 10px 0px 10px;
+}
+
+.comment-column {
+    display: grid; 
+    grid-template-columns: repeat(2, 50%); 
+    gap: 20px; 
+    width: 100%;
+    padding: 20px;
+    margin: auto;
+}
+
+.small-text {
+    font-size: 1.5rem; 
+}
+
+h1 {
+    
+    font-size: 3rem;
+
+}
+h2 {
+    margin-bottom: 5px;
+    margin-top: 5px; 
+    font-size: 2.5rem;
+}
+
+label{
+    font-size: 1.5rem;
+}
+img {
+    max-width: 95%;
+    max-height: 95%;
+}
+
