@@ -2,11 +2,49 @@
 
 ## Índice
 - [Descripción](#descripción)
+- [Requisitos previos](#requisitos-previos)
+- [Configuración inicial](#configuración-inicial)
 - [Estructura del Proyecto](#estructura-del-proyecto)
 
 
 ## Descripción
-Aplicación web que permite gestionar actividades recreativas que están siendo desarrolladas en algún sector en particular. El sistema permite agregar una nueva actividad a través de un formulario, acceder a un listado de las actividades que están siendo realizadas e informar sobre distintas estadísticas de las actividades en la aplicación web. 
+Aplicación web que permite gestionar actividades recreativas que están siendo desarrolladas en algún sector en particular. El sistema permite agregar una nueva actividad a través de un formulario, acceder a un listado de las actividades que están siendo realizadas, generar comentarios sobre dicha actividad e informar sobre distintas estadísticas de las actividades en la aplicación web. 
+
+## Requisitos previos
+Asegúrate de tener instalado lo siguiente:
+
+- **Python**
+- **Git**
+
+## Configuración inicial
+
+```bash
+git clone https://github.com/devrr0/desarrollo_web_rocio_farias.git
+cd flask_app
+```
+
+2. Crear y activar un entorno virtual para aislar las dependencias del proyecto
+
+```bash
+python -m venv venv
+venv\Scripts\activate
+```
+
+3. Instalar las dependencias necesarias con el entorno virtual activado.
+
+```bash
+pip install -r requirements.txt
+```
+
+4.  Ejecutar el Servidor para ver que todo funcione correctamente.
+
+```bash
+flask run
+```
+
+5. Entrar a la aplicación:
+   
+   - Aplicación: [http://127.0.0.1:5000/home](http://127.0.0.1:5000/home)
 
 
 ## Estructura del proyecto
